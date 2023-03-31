@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "crypto-ta"
+version = "0.1.0"
+description = "Service for tech analysis cryptocurrency and trading strategies testing + Binance API"
+authors = ["Ivan Bogomolov <qhomop@gmail.com>"]
+license = "GNU GENERAL PUBLIC LICENSE"
+readme = "README.md"
+packages = [{include = "crypto_ta"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-dotenv = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
