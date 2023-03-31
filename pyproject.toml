@@ -12,6 +12,8 @@ python = "^3.10"
 python-dotenv = "^1.0.0"
 binance = "^0.3"
 binance-connector = "^2.0.0"
+logging = "^0.4.9.6"
+pyyaml = "^6.0"
 
 
 [build-system]
