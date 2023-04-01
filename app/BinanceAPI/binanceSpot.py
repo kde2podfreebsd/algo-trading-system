@@ -94,7 +94,7 @@ class BinanceSpot:
         log.logger.info((df.tail(10)))
         return df
 #3
-    def make_MAFast_MASLow(self):
+    def make_MAFast_MASLow(self) -> List[List[str]]:
         df = self.make_klines()
         df['ma_fast'] = df['c'].ewm(span=12, adjust=False).mean()
         df['ma_slow'] = df['c'].ewm(span=26, adjust=False).mean()
