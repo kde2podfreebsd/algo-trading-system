@@ -3,6 +3,7 @@ from app.Logger import Logger
 from binance.spot import Spot
 from binance.error import ClientError, ServerError, ParameterRequiredError, \
     ParameterValueError, ParameterTypeError, ParameterArgumentError
+from requests.exceptions import ConnectionError
 import pandas as pd
 from typing import Optional, List, NoReturn, Union, Mapping, Text, Tuple, Sequence
 from pandas import DataFrame
@@ -21,13 +22,14 @@ class BinanceSpot:
 
     def get_spot_tickers(self) -> List[str] | Exception:
         try:
-            log.logger.info()
+            log.logger.info(list(map(lambda x: x.get('symbol'), self.client.ticker_price())))
             return list(map(lambda x: x.get('symbol'), self.client.ticker_price()))
         except ClientError or ServerError or ParameterTypeError or ParameterArgumentError or ParameterValueError or ParameterRequiredError as err:
             log.logger.error(f"Binance API Error: [{err}]")
             raise err
         except Exception as err:
             log.logger.error(f"Error: [{err}]")
+            raise err
 
     def get_ticker_price(self, ticker: str | List[str]) -> Union[
         Mapping[Text, Optional[Text]],
@@ -43,37 +45,68 @@ class BinanceSpot:
                 output = self.client.ticker_price(symbol=ticker)
                 log.logger.info(output)
                 return output
-        except ClientError or ServerError or ParameterTypeError or ParameterArgumentError or ParameterValueError or ParameterRequiredError as err:
+        except ClientError or ServerError or ParameterTypeError or ParameterArgumentError or ParameterValueError or ParameterRequiredError or ConnectionError as err:
             log.logger.error(f"Binance API Error: [{err}]")
             raise err
         except Exception as err:
             log.logger.error(f"Error: [{err}]")
+            raise err
 
     def get_ticker_24h(self, ticker: str | List[str]) -> Tuple[Tuple[Text, Optional[Text]], ...]:
         try:
             if isinstance(ticker, str):
-                return self.client.ticker_24hr(ticker, symbols=None, type="FULL")
+                output = self.client.ticker_24hr(ticker, symbols=None, type="FULL")
+                log.logger.info(output)
+                return output
             if isinstance(ticker, str):
-                return self.client.ticker_24hr(symbol=None, symbols=ticker, type="FULL")
+                output = self.client.ticker_24hr(symbol=None, symbols=ticker, type="FULL")
+                log.logger.info(output)
+                return output
         except ClientError or ServerError or ParameterTypeError or ParameterArgumentError or ParameterValueError or ParameterRequiredError as err:
             log.logger.error(f"Binance API Error: [{err}]")
             raise err
         except Exception as err:
             log.logger.error(f"Error: [{err}]")
+            raise err
 
+    def get_avg_price(self, ticker: str):
+        try:
+            output = self.client.avg_price(ticker)
+            log.logger.info(output)
+            return output
+        except ClientError or ServerError or ParameterTypeError or ParameterArgumentError or ParameterValueError or ParameterRequiredError as err:
+            log.logger.error(f"Binance API Error: [{err}]")
+            raise err
+        except Exception as err:
+            log.logger.error(f"Error: [{err}]")
+            raise err
 
-    def klines(self):
+#1
+    @staticmethod
+    def make_dataFrame(r)->Union:
+        return DataFrame(r)
+
+#2
+    def make_klines(self) -> List[List[str]]:
         r = self.client.klines("BTCUSDT", "1h", limit=300)
-        df = DataFrame(r).iloc[:, :5]
+        df = self.make_dataFrame(r).iloc[:, :5]
         df.columns = list("tohlc")
+        log.logger.info((df.tail(10)))
+        return df
+#3
+    def make_MAFast_MASLow(self):
+        df = self.make_klines()
         df['ma_fast'] = df['c'].ewm(span=12, adjust=False).mean()
         df['ma_slow'] = df['c'].ewm(span=26, adjust=False).mean()
-        print(df.tail(10))
+        log.logger.info(df.tail(10))
+        return df
 
-
-b = BinanceSpot()
-# b.klines()
-# b.get_spot_tickers()
-# print(b.get_ticker_price(ticker=["BTCUSDT", "ETHUSDT"]))
-# print(b.get_ticker_price(ticker="BTCUSDT"))
-b.get_ticker_24h(ticker=None, type_of_request=None)
+if __name__=='__main__':
+    b = BinanceSpot()
+    b.make_klines()
+    b.make_MAFast_MASLow()
+    b.get_spot_tickers()
+    print(b.get_ticker_price(ticker=["BTCUSDT", "ETHUSDT"]))
+    print(b.get_ticker_price(ticker="BTCUSDT"))
+    b.get_ticker_24h(ticker="BTCUSDT")
+    b.get_avg_price(ticker="BTCBUSD")
