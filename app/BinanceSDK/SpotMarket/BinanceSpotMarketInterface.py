@@ -10,8 +10,8 @@ class BinanceSpotMarketInterface:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def __init__(self) -> NoReturn:
-        self.__client = Spot()
+    def __init__(self, api_key, api_secret, base_url) -> NoReturn:
+        self.__client = Spot(api_key=api_key, api_secret=api_secret, base_url=base_url)
 
     @staticmethod
     @abstractstaticmethod

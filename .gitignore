@@ -101,6 +101,9 @@ __pypackages__/
 celerybeat-schedule
 celerybeat.pid
 
+ta-lib-0.4.0-src.tar.gz
+ta-lib/
+
 # SageMath parsed files
 *.sage.py
 
