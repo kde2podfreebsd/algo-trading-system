@@ -8,8 +8,3 @@ def setup_logger(logger):
         # coloredlogs.install()
         logging.config.dictConfig(config)
         # coloredlogs.install(level='DEBUG', logger=logger)
-
-
-# logger = logging.getLogger(__name__)
-# setup_logger(logger=logger)
-# logging.debug("hello")

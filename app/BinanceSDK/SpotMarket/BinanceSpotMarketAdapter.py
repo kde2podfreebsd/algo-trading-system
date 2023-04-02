@@ -14,11 +14,13 @@ config.read(f"{basedir}/../../../config.ini")
 logger = logging.getLogger(__name__)
 setup_logger(logger=logger)
 
+
 @singleton
 class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
     def __init__(self, base_url: Optional[str] = "https://testnet.binance.vision") -> NoReturn:
         self.__apiKey = config['Binance']['apiKey']
         self.__apiSecret = config['Binance']['apiSecret']
+        # super().__init__(api_key=self.__apiKey, api_secret = self.__apiSecret, base_url=base_url)
         self.__client = Spot(api_key=self.__apiKey, api_secret=self.__apiSecret, base_url=base_url)
 
     def agg_trades(

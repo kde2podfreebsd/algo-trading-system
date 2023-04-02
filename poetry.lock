@@ -812,6 +812,20 @@ files = [
 ]
 
 [[package]]
+name = "ta-lib"
+version = "0.4.25"
+description = "Python wrapper for TA-Lib"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "TA-Lib-0.4.25.tar.gz", hash = "sha256:6c51c09fcc138367483bcce6db81329ae6851e6ca1a8ac1e50732e443d15602b"},
+]
+
+[package.dependencies]
+numpy = "*"
+
+[[package]]
 name = "twisted"
 version = "22.10.0"
 description = "An asynchronous networking framework written in Python"
@@ -969,4 +983,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "2f28e1b48e11be8904ed0d257327d9de6cc84e418a0f006413aade269f238226"
+content-hash = "8b6e41c6d922a8341195f5356d4750eff18f0fc0f109c5c4a0eb96f4dfd6f87b"

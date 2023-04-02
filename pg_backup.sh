@@ -1,3 +1,5 @@
+#!/bin/bash
+
 db_name=dbname
 db_user=dbuser
 db_host=host
