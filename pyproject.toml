@@ -16,6 +16,7 @@ logging = "^0.4.9.6"
 pyyaml = "^6.0"
 pandas = "^1.5.3"
 redis = "^4.5.4"
+coloredlogs = "^15.0.1"
 
 
 [build-system]
