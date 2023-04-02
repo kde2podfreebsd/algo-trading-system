@@ -1,6 +1,8 @@
+import abc
+
 from binance.spot import Spot
 from pandas.core.frame import DataFrame
-from typing import Optional, List, NoReturn, Union, Mapping, Text, Tuple, Sequence, Dict, Set
+from typing import Optional, List, NoReturn, Union, Dict, Set, Any, Sequence
 from abc import ABCMeta, abstractmethod, abstractstaticmethod, abstractproperty
 
 
@@ -30,7 +32,7 @@ class BinanceSpotMarketInterface:
             startTime: Optional[int],
             endTime: Optional[int]
     ) \
-            -> List[Dict[str: str]]:
+            -> Sequence[Dict[str, Union[str | int | float | bool]]]:
         """
         Get aggregation trades info
         :param symbol:
@@ -42,7 +44,7 @@ class BinanceSpotMarketInterface:
         """
 
     @abstractmethod
-    def avg_price(self, symbol: str) -> Dict[str: Union[int | float]]:
+    def avg_price(self, symbol: str) -> Dict[str, Union[int | str]]:
         """
         Get average price of ticker for last 5 min
         :param symbol:
@@ -50,15 +52,15 @@ class BinanceSpotMarketInterface:
         """
 
     @abstractmethod
-    def book_ticker(self, symbol: str) -> Dict[str: str] | List[Dict[str: str]]:
+    def book_ticker(self, symbols: List[str]) -> Sequence[Dict[str, str]]:
         """
         Best price/qty on the order book for a symbol or symbols
-        :param symbol:
+        :param symbols:
         :return:
         """
 
     @abstractmethod
-    def depth(self, symbol: str, limit: Optional[int]) -> Dict[str: Union[int | List[List[str]]]]:
+    def depth(self, symbol: str, limit: Optional[int]) -> Dict[str, Union[Sequence[List[str]] | int]]:
         """
         Get orderbook
         :param symbol:
@@ -67,7 +69,7 @@ class BinanceSpotMarketInterface:
         """
 
     @abstractmethod
-    def exchange_info(self, symbols: str | List[str]) -> Dict[str: Union[str | List[str] | List[List[str]] | List[Dict[str: str]]]]:
+    def exchange_info(self, symbols: List[str]) -> Dict[str, Union[Any]]:
         """
         Current exchange trading rules and symbol information
         :param symbols:
@@ -79,7 +81,7 @@ class BinanceSpotMarketInterface:
         pass
 
     @abstractmethod
-    def kLines(self, symbol: str, interval: str, limit: Optional[int]) -> List[List[str]]:
+    def kLines(self, symbol: str, interval: str, limit: Optional[int]) -> Sequence[List['str']]:
         """
         Kline/Candlestick Data
         :param symbol:
@@ -89,14 +91,14 @@ class BinanceSpotMarketInterface:
         """
 
     @abstractmethod
-    def ping(self) -> Set:
+    def ping(self) -> Dict:
         """
         Test connectivity to the Rest API.
         :return:
         """
 
     @abstractmethod
-    def rolling_window_ticker(self, symbol: str, windowSize: str, requestType: str) -> Dict[str: Union[str | int | float]]:
+    def rolling_window_ticker(self, symbol: str, windowSize: str, requestType: str) -> Dict[str, Union[str | int | float]]:
         """
         The window used to compute statistics is typically slightly wider than requested windowSize.
         :param symbol:
@@ -106,7 +108,7 @@ class BinanceSpotMarketInterface:
         """
 
     @abstractmethod
-    def ticker_24hr(self, symbols: List[str], requestType: str) -> List[Dict[str: Union[str | int | float]]]:
+    def ticker_24hr(self, symbols: List[str], requestType: str) -> Sequence[Dict[str, Union[str | int | float]]]:
         """
         24hr Ticker Price Change Statistics
         :param symbols:
@@ -115,7 +117,7 @@ class BinanceSpotMarketInterface:
         """
 
     @abstractmethod
-    def ticker_price(self, symbols: List[str]) -> List[Dict[str: str]]:
+    def ticker_price(self, symbols: List[str]) -> Sequence[Dict[str, str]]:
         """
         Symbol Price Ticker
         :param symbols:
@@ -123,14 +125,14 @@ class BinanceSpotMarketInterface:
         """
 
     @abstractmethod
-    def time(self) -> Dict[str: int]:
+    def time(self) -> Dict[str, int]:
         """
         Test connectivity to the Rest API and get the current server time.
         :return:
         """
 
     @abstractmethod
-    def trades(self, symbol: str, limit: Optional[int]) -> List[Dict[str: Union[str | int | float | bool]]]:
+    def trades(self, symbol: str, limit: Optional[int]) -> Dict[str, Union[str | int | float |bool]]:
         """
         Get recent trades (up to last 500).
         :param symbol:
@@ -146,7 +148,7 @@ class BinanceSpotMarketInterface:
             limit: Optional[int],
             startTime: Optional[int],
             endTime: Optional[int]
-    ) -> List[List[str]]:
+    ) -> Sequence[List[str]]:
         """
         Kline/Candlestick Data
         :param symbol:
