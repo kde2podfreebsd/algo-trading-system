@@ -6,9 +6,11 @@ from binance.spot import Spot
 from app.singletonWrapper import singleton
 from app.Logger import setup_logger
 from app.BinanceSDK.SpotMarket.BinanceSpotMarketInterface import BinanceSpotMarketInterface
+from app.Exceptions import BinanceSpotMarketException
+from datetime import datetime
 
-config = configparser.ConfigParser()
 basedir = os.path.abspath(os.path.dirname(__file__))
+config = configparser.ConfigParser()
 config.read(f"{basedir}/../../../config.ini")
 
 logger = logging.getLogger(__name__)
@@ -38,7 +40,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             return output
 
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
     def avg_price(self, symbol: str) -> Dict[str, Union[int | str]]:
         try:
@@ -47,7 +49,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             return output
 
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
     def book_ticker(self, symbols: List[str]) -> Sequence[Dict[str, str]]:
         try:
@@ -56,7 +58,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             return output
 
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
     def depth(self, symbol: str, limit: Optional[int] = None) -> Dict[str, Union[Sequence[List[str]] | int]]:
         try:
@@ -64,7 +66,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             logging.info(output)
             return output
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
     def exchange_info(self, symbols: List[str]) -> Dict[str, Union[Any]]:
         try:
@@ -73,7 +75,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             return output
 
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
     def historical_trades(self):
         print(self.__client.historical_trades("BTCUSDT"))
@@ -83,8 +85,8 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             symbol: str,
             interval: str,
             limit: Optional[int] = 10,
-            startTime: Optional[int] = 456895968,
-            endTime: Optional[int] = 4568959654545
+            startTime: Optional[int] = None,
+            endTime: Optional[int] = None
     ) \
             -> Sequence[List['str']]:
         try:
@@ -99,7 +101,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             return output
 
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
     def ping(self) -> Dict:
         try:
@@ -108,7 +110,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             return output
 
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
     def rolling_window_ticker(self, symbol: str, windowSize: str = "1d", requestType: str = "FULL") -> Dict[str, Union[str | int | float]]:
         try:
@@ -117,7 +119,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             return output
 
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
     def ticker_24hr(self, symbols: List[str], requestType: str = "FULL") -> Sequence[Dict[str, Union[str | int | float]]]:
         try:
@@ -126,7 +128,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             return output
 
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
     def ticker_price(self, symbols: List[str]) -> Sequence[Dict[str, str]]:
         try:
@@ -135,7 +137,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             return output
 
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
     def time(self) -> Dict[str, int]:
         try:
@@ -144,7 +146,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             return output
 
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
     def trades(self, symbol: str, limit: Optional[int] = 10) -> Dict[str, Union[str | int | float |bool]]:
         try:
@@ -153,7 +155,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             return output
 
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
     def uikLines(
             self,
@@ -175,7 +177,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             return output
 
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
     def spotTickers(self) -> List[str]:
         try:
@@ -184,8 +186,30 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             return output
 
         except Exception:
-            raise Exception
+            raise BinanceSpotMarketException(err=Exception)
 
+
+    def makeKLinesDataFrame(self, symbol: str, bar_interval, startTime: datetime, endTime: Optional[datetime]):
+        try:
+            if endTime is None:
+                endTime = int(self.time().get('serverTime'))
+            else:
+                endTime = int(endTime.timestamp())
+
+            if startTime is not None:
+                startTime = int(startTime.timestamp())
+
+            data = self.kLines(symbol=symbol, interval=bar_interval, limit=10000, startTime=startTime, endTime=endTime)
+            df = self.make_dataFrame(data)
+            df.columns = ['Kline open time', 'Open price', 'High price', 'Low price', 'Close price', 'Volume', 'Kline Close time', 'Quote asset volume', 'Number of trades', 'Taker buy base asset volume', 'Taker buy quote asset volume', 'Ignore']
+            # ts.columns = [col.lower().replace(' ', '_') for col in ts.columns]
+            for i in list(df['Kline open time']):
+                df = df.replace(i, datetime.fromtimestamp(i/1000))
+
+            return df
+
+        except Exception:
+            raise BinanceSpotMarketException(err=Exception)
 
 if __name__ == "__main__":
     b = BinanceSpotMarketAdapter()
@@ -204,3 +228,5 @@ if __name__ == "__main__":
     # print(b.uikLines(symbol='ETHBUSD', interval='1h'))
     # print(b.spotTickers())
     # print(b.historical_trades())
+
+    # print(b.makeKLinesDataFrame(symbol='BTCUSDT', bar_interval='1d', startTime=datetime(2023,4,3), endTime=None))

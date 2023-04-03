@@ -1,16 +1,17 @@
-import abc
-
 from binance.spot import Spot
 from pandas.core.frame import DataFrame
-from typing import Optional, List, NoReturn, Union, Dict, Set, Any, Sequence
-from abc import ABCMeta, abstractmethod, abstractstaticmethod, abstractproperty
-
+from typing import Optional, List, NoReturn, Union, Dict, Any, Sequence
+from abc import ABCMeta, abstractmethod, abstractstaticmethod
+import pandas as pd
 
 class BinanceSpotMarketInterface:
     __metaclass__ = ABCMeta
 
     @abstractmethod
     def __init__(self, api_key, api_secret, base_url) -> NoReturn:
+        pd.set_option('display.max_rows', 800)
+        pd.set_option('display.max_columns', 800)
+        pd.set_option('display.width', 1000)
         self.__client = Spot(api_key=api_key, api_secret=api_secret, base_url=base_url)
 
     @staticmethod
