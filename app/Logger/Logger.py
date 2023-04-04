@@ -3,7 +3,7 @@ import logging.config
 import yaml
 
 def setup_logger(logger):
-    with open('../../logging.yaml', 'r') as stream:
+    with open('logging.yaml', 'r') as stream:
         config = yaml.load(stream, Loader=yaml.FullLoader)
         # coloredlogs.install()
         logging.config.dictConfig(config)

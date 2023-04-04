@@ -19,6 +19,7 @@ redis = "^4.5.4"
 coloredlogs = "^15.0.1"
 ta-lib = "^0.4.25"
 yfinance = "^0.2.14"
+pytest = "^7.2.2"
 
 
 [build-system]
