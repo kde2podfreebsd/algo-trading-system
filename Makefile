@@ -7,3 +7,6 @@ down:
 # Clean cache
 clean:
 	find . -name __pycache__ -type d -print0|xargs -0 rm -r --
+
+test:
+	pytest app/TaLib/Test/MomentumIndicatorsTest.py
