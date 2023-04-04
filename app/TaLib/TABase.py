@@ -4,6 +4,8 @@ import pandas as pd
 
 class TAInterface(object):
     __metaclass__ = ABCMeta
+
+
     @abstractmethod
     def __init__(self, max_rows: int = 1000, max_columns: int = 1000, width: int = 1000):
         pd.set_option('display.max_rows', max_rows)
