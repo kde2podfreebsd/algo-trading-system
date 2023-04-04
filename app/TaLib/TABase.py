@@ -1,16 +1,39 @@
 from abc import ABCMeta, abstractmethod
 import pandas as pd
-
+from pandas import DataFrame
+from app.Exceptions.TaLibBaseException import TaLibBaseException
 
 class TAInterface(object):
     __metaclass__ = ABCMeta
 
+    @property
+    def modules(self):
+        return self.__function_groups.keys()
 
     @abstractmethod
     def __init__(self, max_rows: int = 1000, max_columns: int = 1000, width: int = 1000):
         pd.set_option('display.max_rows', max_rows)
         pd.set_option('display.max_columns', max_columns)
         pd.set_option('display.width', width)
+
+    @classmethod
+    @staticmethod
+    def is_valid_dataframe(func):
+        def wrapper(*args, **kwargs):
+            if kwargs.get('df') is not None:
+                if isinstance(kwargs.get('df'), DataFrame):
+                    columns = list(map(lambda x: x, kwargs.get('df').columns))
+                    if 'Open' and 'High' and 'Low' and 'Close' and 'Volume' not in columns:
+                        raise TaLibBaseException(err="DataFrame is not valid")
+                    else:
+                        print("df is valid")
+                else:
+                    raise TaLibBaseException(err="kwargs.get('df') is not DataFrame")
+
+            result = func(**kwargs)
+            return result
+
+        return wrapper
 
     __function_groups = {
         'Cycle Indicators': [
@@ -193,7 +216,6 @@ class TAInterface(object):
         ],
     }
 
-    @property
-    def modules(self):
-        return self.__function_groups.keys()
+
+
 

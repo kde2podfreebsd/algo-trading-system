@@ -1,6 +1,6 @@
 from binance.error import ClientError, ServerError, ParameterRequiredError, \
 ParameterValueError, ParameterTypeError, ParameterArgumentError
-from app.Logger import setup_logger
+from app.setup_logger import setup_logger
 import logging
 
 class BinanceSpotMarketException(Exception):
@@ -11,4 +11,4 @@ class BinanceSpotMarketException(Exception):
         logging.error(self.error)
 
     def __str__(self):
-        return f"Binance.Spot.Market Exception: {self.error}"
+        return f"BinanceSDK.Binance.Spot.Market.Exception: {self.error}"

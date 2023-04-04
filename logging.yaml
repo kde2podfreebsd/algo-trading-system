@@ -13,7 +13,7 @@ handlers:
     class: logging.FileHandler
     level: DEBUG
     formatter: simple
-    filename: logs.log
+    filename: /home/donqhomo/Desktop/Crypto-TA/logs.log
 loggers:
   simpleExample:
     level: DEBUG
