@@ -223,15 +223,8 @@ class BinanceSpotMarket(object):
         bar_interval,
         startTime: datetime,
         endTime: Optional[datetime],
-    ):
+    ) -> DataFrame:
         try:
-            if endTime is None:
-                endTime = int(self.time().get("serverTime"))
-            else:
-                endTime = int(endTime.timestamp())
-
-            if startTime is not None:
-                startTime = int(startTime.timestamp())
 
             data = self.kLines(
                 symbol=symbol,
@@ -240,7 +233,9 @@ class BinanceSpotMarket(object):
                 startTime=startTime,
                 endTime=endTime,
             )
+
             df = self.make_dataFrame(data)
+
             df.columns = [
                 "Open time",
                 "Open",
@@ -263,9 +258,30 @@ class BinanceSpotMarket(object):
         except Exception:
             raise BinanceSpotMarketException(err=Exception)
 
+    # def appendDataFrame(self, df1: DataFrame, ticker):
+    #     df2 = self.makeKLinesDataFrame(
+    #         symbol=ticker,
+    #         bar_interval="1h",
+    #         startTime=datetime(2022, 1, 1),
+    #         endTime=datetime(2023, 3, 1),
+    #     )
+    #     # df1.loc[len(df2)] = list
+    #     return df1
+
 
 if __name__ == "__main__":
     b = BinanceSpotMarket()
+    print(datetime.fromtimestamp(1643341200000 / 1000))
+    df = b.makeKLinesDataFrame(
+        symbol="BTCUSDT",
+        bar_interval="1d",
+        startTime=1643341200000,
+        endTime=1646341200000,
+    )
+
+    print(df)
+
+    # b.appendDataFrame(df1=df, ticker='BTCUSDT')
     # print(b.agg_trades(symbol='ETHBUSD'))
     # print(b.avg_price(symbol='ETHBUSD'))
     # print(b.book_ticker(symbols=['ETHBUSD']))
