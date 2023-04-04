@@ -20,6 +20,8 @@ coloredlogs = "^15.0.1"
 ta-lib = "^0.4.25"
 yfinance = "^0.2.14"
 pytest = "^7.2.2"
+pre-commit = "^3.2.2"
+matplotlib = "^3.7.1"
 
 
 [build-system]
