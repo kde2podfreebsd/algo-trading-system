@@ -1,9 +1,17 @@
 from app.BinanceSDK.BinanceSpotMarket import BinanceSpotMarket
 from app.TaLib.Modules.MomentumIndicators import MomentumIndicators
+from TABase import TAInterface
 
 b = BinanceSpotMarket()
 mi = MomentumIndicators(max_rows=1000,max_columns=1000,width=1000)
 df = b.makeKLinesDataFrame(symbol='BTCUSDT', bar_interval='1h', startTime=None, endTime=None)
+
+@TAInterface.is_valid_dataframe
+def ta(df):
+    return df
+
+# ta(df=df)
+
 
 # o = mi.ADX(df=df, timeperiod=14)
 # o = mi.ADXR(df=df, timeperiod=14)
