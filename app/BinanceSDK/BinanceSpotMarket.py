@@ -5,24 +5,23 @@ from typing import Optional, NoReturn, List, Dict, Union, Any, Sequence
 from binance.spot import Spot
 from app.singletonWrapper import singleton
 from app.Logger import setup_logger
-from app.BinanceSDK.SpotMarket.BinanceSpotMarketInterface import BinanceSpotMarketInterface
 from app.Exceptions import BinanceSpotMarketException
 from datetime import datetime
+from pandas import DataFrame
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 config = configparser.ConfigParser()
-config.read(f"{basedir}/../../../config.ini")
+config.read(f"{basedir}/../../config.ini")
 
 logger = logging.getLogger(__name__)
 setup_logger(logger=logger)
 
 
 @singleton
-class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
+class BinanceSpotMarket(object):
     def __init__(self, base_url: Optional[str] = "https://testnet.binance.vision") -> NoReturn:
         self.__apiKey = config['Binance']['apiKey']
         self.__apiSecret = config['Binance']['apiSecret']
-        # super().__init__(api_key=self.__apiKey, api_secret = self.__apiSecret, base_url=base_url)
         self.__client = Spot(api_key=self.__apiKey, api_secret=self.__apiSecret, base_url=base_url)
 
     def agg_trades(
@@ -188,6 +187,9 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
         except Exception:
             raise BinanceSpotMarketException(err=Exception)
 
+    @staticmethod
+    def make_dataFrame(data):
+        return DataFrame(data)
 
     def makeKLinesDataFrame(self, symbol: str, bar_interval, startTime: datetime, endTime: Optional[datetime]):
         try:
@@ -201,9 +203,8 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
 
             data = self.kLines(symbol=symbol, interval=bar_interval, limit=10000, startTime=startTime, endTime=endTime)
             df = self.make_dataFrame(data)
-            df.columns = ['Kline open time', 'Open price', 'High price', 'Low price', 'Close price', 'Volume', 'Kline Close time', 'Quote asset volume', 'Number of trades', 'Taker buy base asset volume', 'Taker buy quote asset volume', 'Ignore']
-            # ts.columns = [col.lower().replace(' ', '_') for col in ts.columns]
-            for i in list(df['Kline open time']):
+            df.columns = ['Open time', 'Open', 'High', 'Low', 'Close', 'Volume', 'Kline Close time', 'Quote asset volume', 'Number of trades', 'Taker buy base asset volume', 'Taker buy quote asset volume', 'Ignore']
+            for i in list(df['Open time']):
                 df = df.replace(i, datetime.fromtimestamp(i/1000))
 
             return df
@@ -212,7 +213,7 @@ class BinanceSpotMarketAdapter(BinanceSpotMarketInterface):
             raise BinanceSpotMarketException(err=Exception)
 
 if __name__ == "__main__":
-    b = BinanceSpotMarketAdapter()
+    b = BinanceSpotMarket()
     # print(b.agg_trades(symbol='ETHBUSD'))
     # print(b.avg_price(symbol='ETHBUSD'))
     # print(b.book_ticker(symbols=['ETHBUSD']))
