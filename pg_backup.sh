@@ -1,10 +1,10 @@
 #!/bin/bash
 
-db_name=dbname
-db_user=dbuser
-db_host=host
-backupfolder=~/postgresql/backups 
-recipient_email=youremail@example.ru
+db_name='postgres'
+db_user='postgres'
+db_host='192.168.144.2'
+backupfolder=$PWD/db_backups
+#recipient_email=youremail@example.ru
 
 keep_day=30
 sqlfile=$backupfolder/database-$(date +%d-%m-%Y_%H-%M-%S).sql
@@ -14,17 +14,17 @@ mkdir -p $backupfolder
 if pg_dump -U $db_user -h $db_host $db_name > $sqlfile ; then
    echo 'Sql dump created'
 else
-   echo 'pg_dump return non-zero code' | mailx -s 'No backup was created!' $recipient_email
+   echo 'pg_dump return non-zero code | No backup was created!'
    exit
 fi
 
 if gzip -c $sqlfile > $zipfile; then
    echo 'The backup was successfully compressed'
 else
-   echo 'Error compressing backup' | mailx -s 'Backup was not created!' $recipient_email
+   echo 'Error compressing backup | Backup was not created!'
    exit
 fi
-rm $sqlfile 
-echo $zipfile | mailx -s -a $sqlfile 'Backup was successfully created' $recipient_email
- 
+rm $sqlfile
+echo $zipfile
+
 find $backupfolder -mtime +$keep_day -delete

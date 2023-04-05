@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+
+db_backups/
 .idea
 .idea/
 
@@ -134,4 +136,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
