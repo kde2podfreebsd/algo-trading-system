@@ -1,3 +1,4 @@
+# import datetime
 import json
 
 import numpy as np
@@ -8,6 +9,8 @@ from app.singletonWrapper import singleton
 from app.TaLib.Modules.MomentumIndicators import MomentumIndicators
 from app.TaLib.Modules.OverlapStudies import OverlapStudies
 
+# import time
+
 
 @singleton
 class DualSMA_strategy(object):
@@ -16,10 +19,7 @@ class DualSMA_strategy(object):
         self.mi = MomentumIndicators(max_rows=1000, max_columns=1000, width=1000)
         self.os = OverlapStudies(max_rows=1000, max_columns=1000, width=1000)
         self.df = self.binanceSM.makeKLinesDataFrame(
-            symbol=ticker,
-            bar_interval="1h",
-            startTime=None,
-            endTime=None,
+            symbol=ticker, bar_interval="1h", startTime=None, endTime=None
         )
         self.balance = 0
         self.coin = 0.0036

@@ -5,9 +5,9 @@ services:
     image: postgres:14.1-alpine
     restart: always
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=root
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
     ports:
       - "5432:5432"
     networks:
@@ -31,7 +31,7 @@ services:
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
-      - app-network
+      - custom
 
     ports:
       - '6379:6379'
@@ -40,6 +40,8 @@ services:
     image: redislabs/redisinsight:latest
     ports:
       - '8001:8001'
+    networks:
+      - custom
 
   pgadmin:
       container_name: pgadmin4_container
@@ -50,6 +52,9 @@ services:
         PGADMIN_DEFAULT_PASSWORD: root
       ports:
         - '5050:80'
+      networks:
+        - custom
+
 networks:
   custom:
     driver: bridge

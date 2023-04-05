@@ -1,10 +1,26 @@
-from binance.error import ClientError, ServerError, ParameterRequiredError, \
-ParameterValueError, ParameterTypeError, ParameterArgumentError
-from app.setup_logger import setup_logger
 import logging
 
+from binance.error import ClientError
+from binance.error import ParameterArgumentError
+from binance.error import ParameterRequiredError
+from binance.error import ParameterTypeError
+from binance.error import ParameterValueError
+from binance.error import ServerError
+
+from app.setup_logger import setup_logger
+
+
 class BinanceSpotMarketException(Exception):
-    def __init__(self, err: Exception | ClientError | ServerError | ParameterRequiredError | ParameterValueError | ParameterTypeError | ParameterArgumentError):
+    def __init__(
+        self,
+        err: Exception
+        | ClientError
+        | ServerError
+        | ParameterRequiredError
+        | ParameterValueError
+        | ParameterTypeError
+        | ParameterArgumentError,
+    ):
         self.logger = logging.getLogger(__name__)
         setup_logger(logger=self.logger)
         self.error = err
