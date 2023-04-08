@@ -1,14 +1,19 @@
+from TAInterface import TAInterface
+
 from app.BinanceSDK.BinanceSpotMarket import BinanceSpotMarket
 from app.TaLib.Modules.MomentumIndicators import MomentumIndicators
-from TABase import TAInterface
 
 b = BinanceSpotMarket()
-mi = MomentumIndicators(max_rows=1000,max_columns=1000,width=1000)
-df = b.makeKLinesDataFrame(symbol='BTCUSDT', bar_interval='1h', startTime=None, endTime=None)
+mi = MomentumIndicators(max_rows=1000, max_columns=1000, width=1000)
+df = b.makeKLinesDataFrame(
+    symbol="BTCUSDT", bar_interval="1h", startTime=None, endTime=None
+)
+
 
 @TAInterface.is_valid_dataframe
 def ta(df):
     return df
+
 
 # ta(df=df)
 
@@ -45,5 +50,3 @@ def ta(df):
 # print(o.tail(10))
 # # ms = abstract.CDLMORNINGSTAR(data)
 # # print(ms[ms!=0])
-
-

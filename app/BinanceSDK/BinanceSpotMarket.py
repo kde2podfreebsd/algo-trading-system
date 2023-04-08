@@ -13,8 +13,8 @@ from binance.spot import Spot
 from pandas import DataFrame
 
 from app.Exceptions import BinanceSpotMarketException
-from app.setup_logger import basedir
-from app.setup_logger import setup_logger
+from app.settings import basedir
+from app.settings import setup_logger
 from app.singletonWrapper import singleton
 
 config = configparser.ConfigParser()

@@ -8,14 +8,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.DB.models import User
 
-###########################################################
-# BLOCK FOR INTERACTION WITH DATABASE IN BUSINESS CONTEXT #
-###########################################################
-
 
 class UserDAL:
-    """Data Access Layer for operating user info"""
-
     def __init__(self, db_session: AsyncSession):
         self.db_session = db_session
 

@@ -1,7 +1,7 @@
 import talib
 from pandas.core.frame import DataFrame
 
-from app.TaLib.TABase import TAInterface
+from app.TaLib.TAInterface import TAInterface
 
 
 class OverlapStudies(TAInterface):
