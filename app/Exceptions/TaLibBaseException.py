@@ -4,7 +4,7 @@ from app.settings import setup_logger
 
 
 class TaLibBaseException(Exception):
-    def __init__(self, err: Exception):
+    def __init__(self, err: Exception | str):
         self.logger = logging.getLogger(__name__)
         setup_logger(logger=self.logger)
         self.error = err

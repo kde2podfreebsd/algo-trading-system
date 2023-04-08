@@ -5,12 +5,10 @@ import numpy as np
 
 from app.BinanceSDK.BinanceSpotMarket import BinanceSpotMarket
 from app.settings import basedir
-from app.singletonWrapper import singleton
 from app.TaLib.Modules.MomentumIndicators import MomentumIndicators
 from app.TaLib.Modules.OverlapStudies import OverlapStudies
 
 
-@singleton
 class TestBalance:
     def __init__(self, balance, coin, ticker):
         self._balance = balance
@@ -50,7 +48,6 @@ class TestBalance:
         self.coin -= self.coin
 
 
-@singleton
 class DualSMA_strategy(object):
     def __init__(self, ticker: str):
         self.binanceSM = BinanceSpotMarket()
