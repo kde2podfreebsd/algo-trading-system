@@ -9,7 +9,7 @@ from envparse import Env
 basedir = os.path.abspath(os.path.dirname(__file__))
 env = Env()
 config = configparser.ConfigParser()
-config.read(f"{basedir}/../../config.ini")
+config.read(f"{basedir}/../config.ini")
 
 REAL_DATABASE_URL = env.str(
     "REAL_DATABASE_URL",
