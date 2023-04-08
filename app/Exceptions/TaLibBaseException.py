@@ -1,5 +1,6 @@
-from app.setup_logger import setup_logger
 import logging
+
+from app.settings import setup_logger
 
 
 class TaLibBaseException(Exception):

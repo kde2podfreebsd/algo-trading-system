@@ -22,7 +22,7 @@ alembic_upgrade:
 	alembic upgrade heads
 
 server_up:
-	uvicorn app.main:app --host 0.0.0.0 --port 6000
+	uvicorn app.main:app
 
 pre_commit:
 	pre-commit run flake8 --all-files

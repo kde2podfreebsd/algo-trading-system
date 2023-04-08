@@ -7,7 +7,7 @@ from binance.error import ParameterTypeError
 from binance.error import ParameterValueError
 from binance.error import ServerError
 
-from app.setup_logger import setup_logger
+from app.settings import setup_logger
 
 
 class BinanceSpotMarketException(Exception):

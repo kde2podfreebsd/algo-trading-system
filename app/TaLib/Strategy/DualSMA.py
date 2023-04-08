@@ -4,12 +4,50 @@ import json
 import numpy as np
 
 from app.BinanceSDK.BinanceSpotMarket import BinanceSpotMarket
-from app.setup_logger import basedir
+from app.settings import basedir
 from app.singletonWrapper import singleton
 from app.TaLib.Modules.MomentumIndicators import MomentumIndicators
 from app.TaLib.Modules.OverlapStudies import OverlapStudies
 
-# import time
+
+@singleton
+class TestBalance:
+    def __init__(self, balance, coin, ticker):
+        self._balance = balance
+        self._coin = coin
+        self._ticker = ticker
+
+    @property
+    def balance(self):
+        return self._balance
+
+    @balance.setter
+    def balance(self, new_balance):
+        self._balance = new_balance
+
+    @balance.deleter
+    def balance(self):
+        del self._balance
+
+    @property
+    def coin(self):
+        return self._coin
+
+    @coin.setter
+    def coin(self, new_coin_count):
+        self._coin = new_coin_count
+
+    @coin.deleter
+    def coin(self):
+        del self._coin
+
+    @property
+    def ticker(self):
+        return self._ticker
+
+    def sell(self, coin_price: float):
+        self.balance = coin_price * self.coin
+        self.coin -= self.coin
 
 
 @singleton
