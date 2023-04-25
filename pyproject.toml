@@ -30,6 +30,7 @@ alembic = "^1.10.2"
 psycopg2 = "^2.9.6"
 pydantic = {extras = ["email"], version = "^1.10.7"}
 asyncpg = "^0.27.0"
+schedule = "^1.2.0"
 
 
 [build-system]
