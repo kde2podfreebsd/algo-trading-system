@@ -1,6 +1,5 @@
 import configparser
 import logging
-import os
 from datetime import datetime
 from typing import Any
 from typing import Dict
@@ -14,19 +13,16 @@ from pandas import DataFrame
 
 from Exceptions import BinanceSpotMarketException
 from settings import basedir
+from settings import setup_logger
 from singletonWrapper import singleton
 
 # from typing import NoReturn
-# from settings import setup_logger
 
 config = configparser.ConfigParser()
 config.read(f"{basedir}/config.ini")
 
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-# logger = logging.getLogger(__name__)
-# setup_logger(logger=logger)
+logger = logging.getLogger(__name__)
+setup_logger(logger=logger)
 
 
 @singleton
