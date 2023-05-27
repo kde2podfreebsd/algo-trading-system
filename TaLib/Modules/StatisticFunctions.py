@@ -12,7 +12,7 @@ class StatisticFunctions(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def BETA(df: DataFrame, timeperiod: int):
+    def BETA(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"BETA {timeperiod}"] = talib.BETA(
             df["High"], df["Low"], timeperiod=timeperiod
@@ -21,7 +21,7 @@ class StatisticFunctions(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def CORREL(df: DataFrame, timeperiod: int):
+    def CORREL(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"CORREL {timeperiod}"] = talib.CORREL(
             df["High"], df["Low"], timeperiod=timeperiod
@@ -30,7 +30,7 @@ class StatisticFunctions(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def LINEARREG(df: DataFrame, timeperiod: int):
+    def LINEARREG(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"LINEARREG {timeperiod}"] = talib.LINEARREG(
             df["Close"], timeperiod=timeperiod
@@ -39,7 +39,7 @@ class StatisticFunctions(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def LINEARREG_ANGLE(df: DataFrame, timeperiod: int):
+    def LINEARREG_ANGLE(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"LINEARREG_ANGLE {timeperiod}"] = talib.LINEARREG_ANGLE(
             df["Close"], timeperiod=timeperiod
@@ -48,7 +48,7 @@ class StatisticFunctions(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def LINEARREG_INTERCEPT(df: DataFrame, timeperiod: int):
+    def LINEARREG_INTERCEPT(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"LINEARREG_INTERCEPT {timeperiod}"] = talib.LINEARREG_INTERCEPT(
             df["Close"], timeperiod=timeperiod
@@ -57,7 +57,7 @@ class StatisticFunctions(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def LINEARREG_SLOPE(df: DataFrame, timeperiod: int):
+    def LINEARREG_SLOPE(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"LINEARREG_SLOPE {timeperiod}"] = talib.LINEARREG_SLOPE(
             df["Close"], timeperiod=timeperiod
@@ -66,7 +66,7 @@ class StatisticFunctions(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def STDDEV(df: DataFrame, timeperiod: int, nbdev: float):
+    def STDDEV(df: DataFrame, timeperiod: int, nbdev: float) -> DataFrame:
         output = df
         output[f"STDDEV {timeperiod}"] = talib.STDDEV(
             df["Close"],
@@ -77,7 +77,7 @@ class StatisticFunctions(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def TSF(df: DataFrame, timeperiod: int):
+    def TSF(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"TSF {timeperiod}"] = talib.TSF(df["Close"], timeperiod=timeperiod)
         return output

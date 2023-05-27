@@ -31,7 +31,7 @@ class OverlapStudies(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def DEMA(df: DataFrame, timeperiod: int):
+    def DEMA(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output["DEMA"] = talib.DEMA(df["Close"], timeperiod)
         return output
@@ -45,21 +45,21 @@ class OverlapStudies(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def HT_TRENDLINE(df: DataFrame):
+    def HT_TRENDLINE(df: DataFrame) -> DataFrame:
         output = df
         output["HT_TRENDLINE"] = talib.HT_TRENDLINE(df["Close"])
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def KAMA(df: DataFrame, timeperiod: int):
+    def KAMA(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"KAMA {timeperiod}"] = talib.KAMA(df["Close"], timeperiod=timeperiod)
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def MA(df: DataFrame, timeperiod: int, matype: int):
+    def MA(df: DataFrame, timeperiod: int, matype: int) -> DataFrame:
         output = df
         output[f"MA {timeperiod} {matype}"] = talib.MA(
             df["Close"],
@@ -70,7 +70,7 @@ class OverlapStudies(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def MAMA(df: DataFrame, fastlimit: float, slowlimit: float):
+    def MAMA(df: DataFrame, fastlimit: float, slowlimit: float) -> DataFrame:
         output = df
         (
             output[f"mama {fastlimit} {slowlimit}"],
@@ -90,7 +90,7 @@ class OverlapStudies(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def MIDPOINT(df: DataFrame, timeperiod: int):
+    def MIDPOINT(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"MIDPOINT {timeperiod}"] = talib.MIDPOINT(
             df["Close"], timeperiod=timeperiod
@@ -99,7 +99,7 @@ class OverlapStudies(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def MIDPRICE(df: DataFrame, timeperiod: int):
+    def MIDPRICE(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"MIDPRICE {timeperiod}"] = talib.MIDPRICE(
             df["High"],
@@ -110,7 +110,7 @@ class OverlapStudies(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def SAR(df: DataFrame, acceleration: float, maximum: float):
+    def SAR(df: DataFrame, acceleration: float, maximum: float) -> DataFrame:
         output = df
         output["SAR"] = talib.SAR(
             df["High"],
@@ -132,7 +132,7 @@ class OverlapStudies(TAInterface, ABC):
         accelerationinitshort: float,
         accelerationshort: float,
         accelerationmaxshort: float,
-    ):
+    ) -> DataFrame:
         output = df
         output["SAREXT"] = talib.SAREXT(
             df["High"],
@@ -157,28 +157,28 @@ class OverlapStudies(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def T3(df: DataFrame, timeperiod: int, vfactor: float):
+    def T3(df: DataFrame, timeperiod: int, vfactor: float) -> DataFrame:
         output = df
         output[f"T3 {timeperiod}"] = talib.T3(df["Close"], timeperiod=timeperiod)
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def TEMA(df: DataFrame, timeperiod: int):
+    def TEMA(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"TEMA {timeperiod}"] = talib.TEMA(df["Close"], timeperiod=timeperiod)
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def TRIMA(df: DataFrame, timeperiod: int):
+    def TRIMA(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"TRIMA {timeperiod}"] = talib.TRIMA(df["Close"], timeperiod=timeperiod)
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def WMA(df: DataFrame, timeperiod: int):
+    def WMA(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"WMA {timeperiod}"] = talib.WMA(df["Close"], timeperiod=timeperiod)
         return output
