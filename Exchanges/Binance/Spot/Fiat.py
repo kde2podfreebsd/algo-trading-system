@@ -1,21 +1,22 @@
 import configparser
 import logging
-from datetime import datetime
-from typing import Any
 from typing import Dict
-from typing import List
 from typing import Optional
 from typing import Sequence
 from typing import Union
 
 from binance.spot import Spot
-from pandas import DataFrame
 
 from Exceptions.BinanceSpotFiatException import BinanceSpotFiatException
 from Exchanges.Binance.BinanceInterface import BinanceInterface
 from settings import basedir
 from settings import setup_logger
 from settings import singleton
+
+# from datetime import datetime
+# from typing import Any
+# from typing import List
+# from pandas import DataFrame
 
 # from typing import NoReturn
 
@@ -90,6 +91,7 @@ class BinanceSpotFiat(BinanceInterface):
         recvWindow (int, optional): the value cannot be greater than 60000
 
         """
+        
         try:
             if transactionType != 0 and transactionType != 1:
                 raise BinanceSpotFiatException(err='transactionType can only be equal 0 (buy) or 1 (sell)')
