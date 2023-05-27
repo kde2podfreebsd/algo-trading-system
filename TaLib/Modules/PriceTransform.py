@@ -1,3 +1,6 @@
+from pandas.core.frame import DataFrame
+
+import talib
 from TaLib.TAInterface import TAInterface
 
 
@@ -6,17 +9,45 @@ class PriceTransform(TAInterface):
         super().__init__(max_rows=max_rows, max_columns=max_columns, width=width)
 
     @staticmethod
-    def AVGPRICE():
-        pass
+    @TAInterface.is_valid_dataframe
+    def AVGPRICE(df: DataFrame):
+        output = df
+        output["AVGPRICE"] = talib.AVGPRICE(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
 
     @staticmethod
-    def MEDPRICE():
-        pass
+    @TAInterface.is_valid_dataframe
+    def MEDPRICE(df: DataFrame):
+        output = df
+        output["MEDPRICE"] = talib.MEDPRICE(
+            df["High"],
+            df["Low"],
+        )
+        return output
 
     @staticmethod
-    def TYPPRICE():
-        pass
+    @TAInterface.is_valid_dataframe
+    def TYPPRICE(df: DataFrame):
+        output = df
+        output["TYPPRICE"] = talib.TYPPRICE(
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
 
     @staticmethod
-    def WCLPRICE():
-        pass
+    @TAInterface.is_valid_dataframe
+    def WCLPRICE(df: DataFrame):
+        output = df
+        output["WCLPRICE"] = talib.WCLPRICE(
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
