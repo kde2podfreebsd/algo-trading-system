@@ -31,10 +31,10 @@ class BinanceSpotMarket(object):
         # self.__apiKey = config["Binance"]["apiKey"]
         # self.__apiSecret = config["Binance"]["apiSecret"]
         self.__apiKey = (
-            "ADRb78f3mJvYZ8lTO7JWXxKTu1rKKJK33W8wil1MUQ8MJmeC5wDFPRwwhai0x6db"
+            config['Binance']['apiKey']
         )
         self.__apiSecret = (
-            "4uA4YYCcYGeM1dBALkNhTsx29nG2gVOoZM5CmiusheGMquPL5NlnMl0c2Do3UTPv"
+            config['Binance']['apiSecret']
         )
         self.__client = Spot(
             api_key=self.__apiKey, api_secret=self.__apiSecret, base_url=base_url

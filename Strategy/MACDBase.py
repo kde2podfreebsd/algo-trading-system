@@ -1,7 +1,7 @@
 # import json
 import numpy as np
 
-from ExchangesAPI.Binance import BinanceSpotMarket
+from ExchangesAPI.Binance.Spot import Market
 from TaLib.Modules.MomentumIndicators import MomentumIndicators
 
 # from app.settings import basedir

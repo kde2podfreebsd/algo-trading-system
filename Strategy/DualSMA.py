@@ -2,7 +2,7 @@ import json
 
 import numpy as np
 
-from ExchangesAPI.Binance import BinanceSpotMarket
+from ExchangesAPI.Binance.Spot import Market
 from settings import basedir
 from TaLib.Modules.MomentumIndicators import MomentumIndicators
 from TaLib.Modules.OverlapStudies import OverlapStudies

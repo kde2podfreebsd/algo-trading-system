@@ -1,7 +1,7 @@
 # import json
 from datetime import datetime
 
-from ExchangesAPI.Binance import BinanceSpotMarket
+from ExchangesAPI.Binance.Spot import Market
 from TaLib.Modules.MomentumIndicators import MomentumIndicators
 from TaLib.TAInterface import TAInterface
 
