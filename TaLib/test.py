@@ -1,6 +1,6 @@
 from TAInterface import TAInterface
 
-from ExchangesAPI.Binance.BinanceSpotMarket import BinanceSpotMarket
+from ExchangesAPI.Binance.Spot.Market import BinanceSpotMarket
 from TaLib.Modules.CycleIndicators import CycleIndicators
 from TaLib.Modules.MathOperators import MathOperators
 from TaLib.Modules.MathTransform import MathTransform

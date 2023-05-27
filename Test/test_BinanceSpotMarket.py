@@ -1,6 +1,6 @@
 import pytest
 
-from ExchangesAPI.Binance import BinanceSpotMarket
+from ExchangesAPI.Binance.Spot import Market
 
 
 @pytest.fixture()

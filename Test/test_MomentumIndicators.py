@@ -1,7 +1,7 @@
 import pytest
 from pandas import DataFrame
 
-from ExchangesAPI.Binance import BinanceSpotMarket
+from ExchangesAPI.Binance.Spot import Market
 from TaLib.Modules.MomentumIndicators import MomentumIndicators
 
 

@@ -1,6 +1,5 @@
 import configparser
 import logging
-import os
 from datetime import datetime
 from typing import Any
 from typing import Dict
@@ -14,19 +13,16 @@ from pandas import DataFrame
 
 from Exceptions import BinanceSpotMarketException
 from settings import basedir
+from settings import setup_logger
 from singletonWrapper import singleton
 
 # from typing import NoReturn
-# from settings import setup_logger
 
 config = configparser.ConfigParser()
 config.read(f"{basedir}/config.ini")
 
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-# logger = logging.getLogger(__name__)
-# setup_logger(logger=logger)
+logger = logging.getLogger(__name__)
+setup_logger(logger=logger)
 
 
 @singleton
@@ -34,12 +30,8 @@ class BinanceSpotMarket(object):
     def __init__(self, base_url: Optional[str] = "https://testnet.binance.vision"):
         # self.__apiKey = config["Binance"]["apiKey"]
         # self.__apiSecret = config["Binance"]["apiSecret"]
-        self.__apiKey = (
-            "ADRb78f3mJvYZ8lTO7JWXxKTu1rKKJK33W8wil1MUQ8MJmeC5wDFPRwwhai0x6db"
-        )
-        self.__apiSecret = (
-            "4uA4YYCcYGeM1dBALkNhTsx29nG2gVOoZM5CmiusheGMquPL5NlnMl0c2Do3UTPv"
-        )
+        self.__apiKey = config["Binance"]["apiKey"]
+        self.__apiSecret = config["Binance"]["apiSecret"]
         self.__client = Spot(
             api_key=self.__apiKey, api_secret=self.__apiSecret, base_url=base_url
         )
@@ -64,7 +56,7 @@ class BinanceSpotMarket(object):
             return output
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            raise BinanceSpotMarketException
 
     def avg_price(self, symbol: str) -> Dict[str, Union[int | str]]:
         try:
@@ -73,7 +65,7 @@ class BinanceSpotMarket(object):
             return output
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            raise BinanceSpotMarketException
 
     def book_ticker(self, symbols: List[str]) -> Sequence[Dict[str, str]]:
         try:
@@ -82,7 +74,7 @@ class BinanceSpotMarket(object):
             return output
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            raise BinanceSpotMarketException
 
     def depth(
         self, symbol: str, limit: Optional[int] = None
@@ -92,7 +84,7 @@ class BinanceSpotMarket(object):
             logging.debug(output)
             return output
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            raise BinanceSpotMarketException
 
     def exchange_info(self, symbols: List[str]) -> Dict[str, Union[Any]]:
         try:
@@ -101,7 +93,7 @@ class BinanceSpotMarket(object):
             return output
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            raise BinanceSpotMarketException
 
     def kLines(
         self,
@@ -133,7 +125,7 @@ class BinanceSpotMarket(object):
             return output
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            raise BinanceSpotMarketException
 
     def rolling_window_ticker(
         self, symbol: str, windowSize: str = "1d", requestType: str = "FULL"
@@ -146,7 +138,7 @@ class BinanceSpotMarket(object):
             return output
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            raise BinanceSpotMarketException
 
     def ticker_24hr(
         self, symbols: List[str], requestType: str = "FULL"
@@ -157,7 +149,7 @@ class BinanceSpotMarket(object):
             return output
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            raise BinanceSpotMarketException
 
     def ticker_price(self, symbols: List[str]) -> Sequence[Dict[str, str]]:
         try:
@@ -166,7 +158,7 @@ class BinanceSpotMarket(object):
             return output
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            raise BinanceSpotMarketException
 
     def time(self) -> Dict[str, int]:
         try:
@@ -175,7 +167,7 @@ class BinanceSpotMarket(object):
             return output
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            raise BinanceSpotMarketException
 
     def trades(
         self, symbol: str, limit: Optional[int] = 10
@@ -186,7 +178,7 @@ class BinanceSpotMarket(object):
             return output
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            raise BinanceSpotMarketException
 
     def uikLines(
         self,
@@ -209,7 +201,7 @@ class BinanceSpotMarket(object):
             return output
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            raise BinanceSpotMarketException
 
     def spotTickers(self) -> List[str]:
         try:
@@ -218,7 +210,7 @@ class BinanceSpotMarket(object):
             return output
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            raise BinanceSpotMarketException
 
     @staticmethod
     def make_dataFrame(data):
