@@ -4,7 +4,6 @@ db_name='postgres'
 db_user='postgres'
 db_host='192.168.144.2'
 backupfolder=$PWD/db_backups
-#recipient_email=youremail@example.ru
 
 keep_day=30
 sqlfile=$backupfolder/database-$(date +%d-%m-%Y_%H-%M-%S).sql

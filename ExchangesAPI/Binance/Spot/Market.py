@@ -102,7 +102,7 @@ class BinanceSpotMarket(object):
         limit: Optional[int] = 10,
         startTime: Optional[int] = None,
         endTime: Optional[int] = None,
-    ) -> Sequence[List["str"]]:
+    ) -> Sequence[List[str]]:
         try:
             output = self.__client.klines(
                 symbol=symbol,
