@@ -93,7 +93,7 @@ class TAInterface(object):
             "APO",
             "AROON",
             "AROONOSC",
-            "BOP",
+            "BOP",  #
             "CCI",
             "CMO",
             "DX",
