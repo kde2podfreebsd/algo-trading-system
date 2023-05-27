@@ -12,7 +12,7 @@ from binance.spot import Spot
 from pandas import DataFrame
 
 from Exceptions import BinanceSpotMarketException
-from Exchanges.Binance.BinanceInterface import BinanceInterfce
+from Exchanges.Binance.BinanceInterface import BinanceInterface
 from settings import basedir
 from settings import setup_logger
 from settings import singleton
@@ -27,7 +27,7 @@ setup_logger(logger=logger)
 
 
 @singleton
-class BinanceSpotMarket(BinanceInterfce):
+class BinanceSpotMarket(BinanceInterface):
     def __init__(self, base_url: Optional[str] = "https://testnet.binance.vision"):
         # self.__apiKey = config["Binance"]["apiKey"]
         # self.__apiSecret = config["Binance"]["apiSecret"]

@@ -10,7 +10,7 @@ from binance.error import ServerError
 from settings import setup_logger
 
 
-class BinanceSpotFiatException(Exception):
+class BinanceSpotPayException(Exception):
     def __init__(
         self,
         err: Exception
@@ -27,4 +27,4 @@ class BinanceSpotFiatException(Exception):
         logging.error(self.error)
 
     def __str__(self):
-        return f"BinanceSDK.Binance.Spot.Fiat.Exception: {self.error}"
+        return f"BinanceSDK.Binance.Spot.Pay.Exception: {self.error}"
