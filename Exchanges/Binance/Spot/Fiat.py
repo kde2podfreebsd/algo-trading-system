@@ -14,7 +14,7 @@ from pandas import DataFrame
 from Exceptions.BinanceSpotFiatException import BinanceSpotFiatException
 from settings import basedir
 from settings import setup_logger
-from singletonWrapper import singleton
+from settings import singleton
 
 # from typing import NoReturn
 
