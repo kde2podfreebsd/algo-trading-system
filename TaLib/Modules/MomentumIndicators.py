@@ -12,7 +12,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def ADX(df: DataFrame, timeperiod: int):
+    def ADX(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"ADX {timeperiod}"] = talib.ADX(
             df["High"], df["Low"], df["Close"], timeperiod=timeperiod
@@ -21,7 +21,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def ADXR(df: DataFrame, timeperiod: int):
+    def ADXR(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"ADRX {timeperiod}"] = talib.ADXR(
             df["High"], df["Low"], df["Close"], timeperiod=timeperiod
@@ -30,7 +30,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def APO(df: DataFrame, fastperiod: int, slowperiod: int, matype: int):
+    def APO(df: DataFrame, fastperiod: int, slowperiod: int, matype: int) -> DataFrame:
         output = df
         output[f"APO {fastperiod} {slowperiod}"] = talib.APO(
             df["Close"], fastperiod=fastperiod, slowperiod=slowperiod, matype=matype
@@ -39,7 +39,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def AROON(df: DataFrame, timeperiod: int):
+    def AROON(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         (
             output[f"AROON_down {timeperiod}"],
@@ -49,7 +49,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def AROONOSC(df: DataFrame, timeperiod: int):
+    def AROONOSC(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"AROONOSC {timeperiod}"] = talib.AROONOSC(
             df["High"], df["Low"], timeperiod=timeperiod
@@ -58,14 +58,14 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def BOP(df: DataFrame):
+    def BOP(df: DataFrame) -> DataFrame:
         output = df
         output["BOP"] = talib.BOP(df["Open"], df["High"], df["Low"], df["Close"])
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def CCI(df: DataFrame, timeperiod: int):
+    def CCI(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"CCI {timeperiod}"] = talib.CCI(
             df["High"], df["Low"], df["Close"], timeperiod=timeperiod
@@ -74,14 +74,14 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def CMO(df: DataFrame, timeperiod: int):
+    def CMO(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"CMO {timeperiod}"] = talib.CMO(df["Close"], timeperiod=timeperiod)
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def DX(df: DataFrame, timeperiod: int):
+    def DX(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         df[f"DX {timeperiod}"] = talib.DX(
             df["High"], df["Low"], df["Close"], timeperiod=timeperiod
@@ -116,7 +116,7 @@ class MomentumIndicators(TAInterface, ABC):
         slowmatype: int,
         signalperiod: int,
         signalmatype: int,
-    ):
+    ) -> DataFrame:
         output = df
         (
             output[f"MACDEXT_macd {fastperiod} {slowperiod} {signalperiod}"],
@@ -135,7 +135,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def MACDFIX(df: DataFrame, signalperiod: int):
+    def MACDFIX(df: DataFrame, signalperiod: int) -> DataFrame:
         output = df
         (
             output[f"MACDEXT_macd {signalperiod}"],
@@ -146,7 +146,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def MFI(df: DataFrame, timeperiod: int):
+    def MFI(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         df[f"MFI {timeperiod}"] = talib.MFI(
             df["High"], df["Low"], df["Close"], df["Volume"], timeperiod=timeperiod
@@ -155,7 +155,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def MINUS_DI(df: DataFrame, timeperiod: int):
+    def MINUS_DI(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"MINUS_DI {timeperiod}"] = talib.MINUS_DI(
             df["High"], df["Low"], df["Close"], timeperiod=timeperiod
@@ -164,7 +164,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def MINUS_DM(df: DataFrame, timeperiod):
+    def MINUS_DM(df: DataFrame, timeperiod) -> DataFrame:
         output = df
         output[f"MINUS_DM {timeperiod}"] = talib.MINUS_DM(
             df["High"], df["Low"], timeperiod=timeperiod
@@ -173,14 +173,14 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def MOM(df: DataFrame, timeperiod: int):
+    def MOM(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"MOM {timeperiod}"] = talib.MOM(df["Close"], timeperiod=timeperiod)
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def PLUS_DI(df: DataFrame, timeperiod: int):
+    def PLUS_DI(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"PLUS_DI {timeperiod}"] = talib.PLUS_DI(
             df["High"], df["Low"], df["Close"], timeperiod=timeperiod
@@ -189,7 +189,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def PLUS_DM(df: DataFrame, timeperiod: int):
+    def PLUS_DM(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"PLUS_DM {timeperiod}"] = talib.PLUS_DM(
             df["High"], df["Low"], timeperiod=timeperiod
@@ -198,7 +198,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def PPO(df: DataFrame, fastperiod: int, slowperiod: int, matype: int):
+    def PPO(df: DataFrame, fastperiod: int, slowperiod: int, matype: int) -> DataFrame:
         output = df
         output[f"PPO {fastperiod} {slowperiod}"] = talib.PPO(
             df["Close"], fastperiod=fastperiod, slowperiod=slowperiod, matype=matype
@@ -207,28 +207,28 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def ROC(df: DataFrame, timeperiod: int):
+    def ROC(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"ROC {timeperiod}"] = talib.ROC(df["Close"], timeperiod=timeperiod)
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def ROCP(df: DataFrame, timeperiod: int):
+    def ROCP(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"ROCP {timeperiod}"] = talib.ROCP(df["Close"], timeperiod=timeperiod)
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def ROCR(df: DataFrame, timeperiod: int):
+    def ROCR(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"ROCR {timeperiod}"] = talib.ROCR(df["Close"], timeperiod=timeperiod)
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def ROCR100(df: DataFrame, timeperiod: int):
+    def ROCR100(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"ROCR100 {timeperiod}"] = talib.ROCR100(
             df["Close"], timeperiod=timeperiod
@@ -270,7 +270,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def STOCHF(df: DataFrame, fastk_period: int, fastd_period: int, fastd_matype: int):
+    def STOCHF(df: DataFrame, fastk_period: int, fastd_period: int, fastd_matype: int) -> DataFrame:
         output = df
         (
             output[f"STOCHF_fastk {fastk_period} {fastd_period}"],
@@ -287,7 +287,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def STOCHRSI(df: DataFrame, timeperiod, fastk_period, fastd_period, fastd_matype):
+    def STOCHRSI(df: DataFrame, timeperiod, fastk_period, fastd_period, fastd_matype) -> DataFrame:
         output = df
         (
             output[f"STOCHRSI_fastk {timeperiod} {fastk_period} {fastd_period}"],
@@ -299,19 +299,18 @@ class MomentumIndicators(TAInterface, ABC):
             fastd_period=fastd_period,
             fastd_matype=fastd_matype,
         )
-
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def TRIX(df: DataFrame, timeperiod: int):
+    def TRIX(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"TRIX {timeperiod}"] = talib.TRIX(df["Close"], timeperiod)
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def ULTOSC(df: DataFrame, timeperiod1: int, timeperiod2: int, timeperiod3: int):
+    def ULTOSC(df: DataFrame, timeperiod1: int, timeperiod2: int, timeperiod3: int) -> DataFrame:
         output = df
         output[f"ULTOSC {timeperiod1} {timeperiod2} {timeperiod3}"] = talib.ULTOSC(
             df["High"],
@@ -325,7 +324,7 @@ class MomentumIndicators(TAInterface, ABC):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def WILLR(df: DataFrame, timeperiod: int):
+    def WILLR(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"WILLR {timeperiod}"] = talib.WILLR(
             df["High"], df["Low"], df["Close"], timeperiod=timeperiod
