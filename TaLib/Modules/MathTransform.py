@@ -1,10 +1,12 @@
-from pandas.core.frame import DataFrame
+from abc import ABC
 
 import talib
+from pandas.core.frame import DataFrame
+
 from TaLib.TAInterface import TAInterface
 
 
-class MathTransform(TAInterface):
+class MathTransform(TAInterface, ABC):
     def __init__(self, max_rows: int, max_columns: int, width: int):
         super().__init__(max_rows=max_rows, max_columns=max_columns, width=width)
 
