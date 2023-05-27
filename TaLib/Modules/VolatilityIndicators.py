@@ -10,7 +10,7 @@ class VolatilityIndicators(TAInterface):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def ATR(df: DataFrame, timeperiod: int):
+    def ATR(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"ATR {timeperiod}"] = talib.ATR(
             df["High"], df["Low"], df["Close"], timeperiod=timeperiod
@@ -19,7 +19,7 @@ class VolatilityIndicators(TAInterface):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def NATR(df: DataFrame, timeperiod: int):
+    def NATR(df: DataFrame, timeperiod: int) -> DataFrame:
         output = df
         output[f"NATR {timeperiod}"] = talib.NATR(
             df["High"], df["Low"], df["Close"], timeperiod=timeperiod
@@ -28,7 +28,7 @@ class VolatilityIndicators(TAInterface):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def TRANGE(df: DataFrame):
+    def TRANGE(df: DataFrame) -> DataFrame:
         output = df
         output["TRANGE"] = talib.TRANGE(
             df["High"],

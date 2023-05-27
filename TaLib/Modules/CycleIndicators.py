@@ -10,21 +10,21 @@ class CycleIndicators(TAInterface):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def HT_DCPERIOD(df: DataFrame):
+    def HT_DCPERIOD(df: DataFrame) -> DataFrame:
         output = df
         output["HT_DCPERIOD"] = talib.HT_DCPERIOD(df["Close"])
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def HT_DCPHASE(df: DataFrame):
+    def HT_DCPHASE(df: DataFrame) -> DataFrame:
         output = df
         output["HT_DCPHASE"] = talib.HT_DCPHASE(df["Close"])
         return output
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def HT_PHASOR(df: DataFrame):
+    def HT_PHASOR(df: DataFrame) -> DataFrame:
         output = df
         (
             output["inphase"],
@@ -34,13 +34,13 @@ class CycleIndicators(TAInterface):
 
     @staticmethod
     @TAInterface.is_valid_dataframe
-    def HT_SINE(df: DataFrame):
+    def HT_SINE(df: DataFrame) -> DataFrame:
         output = df
         (output["sine"], output["leadsine"]) = talib.HT_SINE(df["Close"])
         return output
 
 
-# OUTPUT - integer (СПРОСИТЬ)
+# не выводит integer
 #     @staticmethod
 #     @TAInterface.is_valid_dataframe
 #     def HT_TRENDMODE(df: DataFrame):
