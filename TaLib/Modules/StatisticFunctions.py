@@ -1,3 +1,5 @@
+import talib
+
 from TaLib.TAInterface import TAInterface
 
 
@@ -7,6 +9,7 @@ class StatisticFunctions(TAInterface):
 
     @staticmethod
     def BETA():
+        talib.BETA()
         pass
 
     @staticmethod

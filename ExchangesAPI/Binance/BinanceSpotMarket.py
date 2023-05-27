@@ -18,7 +18,7 @@ from settings import setup_logger
 from singletonWrapper import singleton
 
 config = configparser.ConfigParser()
-config.read(f"{basedir}/../config.ini")
+config.read(f"{basedir}/config.ini")
 
 logger = logging.getLogger(__name__)
 setup_logger(logger=logger)
@@ -93,9 +93,6 @@ class BinanceSpotMarket(object):
 
         except Exception:
             raise BinanceSpotMarketException(err=Exception)
-
-    def historical_trades(self):
-        print(self.__client.historical_trades("BTCUSDT"))
 
     def kLines(
         self,
@@ -276,8 +273,8 @@ if __name__ == "__main__":
     df = b.makeKLinesDataFrame(
         symbol="BTCUSDT",
         bar_interval="1m",
-        startTime=datetime(2023, 4, 16).timestamp(),
-        endTime=datetime(2023, 4, 17).timestamp(),
+        startTime=None,
+        endTime=None,
     )
 
     print(df)

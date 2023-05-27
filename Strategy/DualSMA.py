@@ -53,10 +53,13 @@ class DualSMA_strategy(object):
         self.mi = MomentumIndicators(max_rows=1000, max_columns=1000, width=1000)
         self.os = OverlapStudies(max_rows=1000, max_columns=1000, width=1000)
         self.df = self.binanceSM.makeKLinesDataFrame(
-            symbol=ticker, bar_interval="1h", startTime=None, endTime=None
+            symbol=ticker, bar_interval="15m", startTime=None, endTime=None
         )
-        self.balance = 0
-        self.coin = 0.0036
+        self.balance = 100
+        self.coin = 0
+
+        # self.balance = 0
+        # self.coin = 0.0036
 
     def Main(self):
 
@@ -97,7 +100,7 @@ class DualSMA_strategy(object):
 
     def test_with_balance(
         self,
-        output_file=f"{basedir}/TaLib/StrategyLogs/DualSMA__1h__2023_03_01__2023_04_04.json",
+        output_file=f"{basedir}/Strategy/StrategyLogs/DualSMA__1h__2023_03_01__2023_04_04.json",
     ):
 
         start_balance = self.balance + (float(self.coin) * float(self.df["Close"][0]))

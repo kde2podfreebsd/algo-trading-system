@@ -12,7 +12,7 @@ class MACDBase_strategy(object):
         self.binanceSM = BinanceSpotMarket()
         self.mi = MomentumIndicators(max_rows=1000, max_columns=1000, width=1000)
         self.df = self.binanceSM.makeKLinesDataFrame(
-            symbol=ticker, bar_interval="30m", startTime=None, endTime=None
+            symbol=ticker, bar_interval="1h", startTime=None, endTime=None
         )
         self.balance = 0
         self.coin = 0.0036
@@ -51,6 +51,8 @@ class MACDBase_strategy(object):
 
         self.df["MACDBase_BUY_SIGNAL"] = buy_signal_price
         self.df["MACDBase_SELL_SIGNAL"] = sell_signal_price
+
+        print(self.df)
 
         return self.df
 
