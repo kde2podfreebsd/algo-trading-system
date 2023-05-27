@@ -15,7 +15,10 @@ from Exchanges.ExchangesInterface import ExchangesInterface
 # import pandas as pd
 
 
-class BinanceInterfce(ExchangesInterface):
+class BinanceInterface(ExchangesInterface):
+    __apiSecret: str
+    __apiKey: str
+    exchangeName: str
     __metaclass__ = ABCMeta
 
     @property
