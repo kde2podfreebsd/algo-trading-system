@@ -1,4 +1,5 @@
 import logging
+from logging import Logger
 
 from binance.error import ClientError
 from binance.error import ParameterArgumentError
@@ -11,6 +12,9 @@ from settings import setup_logger
 
 
 class BinanceSpotFiatException(Exception):
+    error: Exception | ClientError | ServerError | ParameterRequiredError | ParameterValueError | ParameterTypeError | ParameterArgumentError
+    logger: Logger
+
     def __init__(
         self,
         err: Exception

@@ -15,6 +15,7 @@ from pandas import DataFrame
 
 
 class ExchangesInterface(object):
+    apiKeys: list[str] | None
     __metaclass__ = ABCMeta
 
     @property
