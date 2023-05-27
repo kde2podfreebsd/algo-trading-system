@@ -92,7 +92,7 @@ chmod +x talib.sh
 6. Прописать команду ``` nmake ```
 7. В терминале PyCharm прописать команду ``` pip install ta-lib ``` (для проверки)
 
-5. Запуск стратеги DualSMA:
+# Запуск стратеги DualSMA:
 ```.sh
 cd Strategy/CustomStrategy/
 python DualSMA
