@@ -46,14 +46,57 @@
 ```.sh
 git clone <https://.git>
 ```
-2. Создайте ``` config.ini ``` и добавьте ключи своих брокеров исходя из config-example.ini 
+2. Создайте ``` config.ini ``` и добавьте ключи своих брокеров
+```
+[Redis]
+host = 192.168.128.2
+port = 6379
+
+[POSTGRESQL]
+host = 192.168.48.2
+port = 5432
+database = postgres
+user = postgres
+password = postgres
+
+
+[HTTPS_SERVER_HOST]
+protocol = http
+server_host = 127.0.0.1
+server_port = 5000
+
+[Binance]
+#inactive keys!
+apiKey = <BinanceApiKey>
+apiSecret = <BinanceApiSecret>
+
+```
 3. Установите необходимые зависимости, запустив команду:
 ```.sh
 pip install -r requirements.txt
 or
 poetry install
 ```
-4. Далее добавить docs/ и доделать документацию по развертке и деплою
+4. Отдельно установить ta-lib
+* ## Для Linux:
+```.sh
+chmod +x talib.sh
+./talib.sh
+```
+* ## Для Windows:
+1. Скачать и установить библиотеку  ta-lib  ZIP-файлом по ссылке: https://sourceforge.net/projects/ta-lib/files/ta-lib/0.4.0/ta-lib-0.4.0-msvc.zip/download?use_mirror=deac-fra
+2. Разархивировать архив в диск С: по пути: ``` C:\ta-lib ```
+3. Скачать и установить Visual Studio Community (2015 и позже)- при установке VSC обязательно поставить галочку рядом с  "Разработка на С++" и "Мобильная разработка на С++" 
+4. Запустить из панели "Пуск" Native Tools Command Prompt for VS...
+5. Прописать путь:``` C:\ta-lib\c\make\cdr\win32\msvc ```
+6. Прописать команду ``` nmake ```
+7. В терминале PyCharm прописать команду ``` pip install ta-lib ``` (для проверки)
+
+5. Запуск стратеги DualSMA:
+```.sh
+cd Strategy/CustomStrategy/
+python DualSMA
+```
 
 ### Настройка pre-committer
 ```.sh
