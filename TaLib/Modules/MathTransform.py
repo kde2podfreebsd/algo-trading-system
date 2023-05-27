@@ -1,3 +1,6 @@
+from pandas.core.frame import DataFrame
+
+import talib
 from TaLib.TAInterface import TAInterface
 
 
@@ -6,61 +9,106 @@ class MathTransform(TAInterface):
         super().__init__(max_rows=max_rows, max_columns=max_columns, width=width)
 
     @staticmethod
-    def ACOS():
-        pass
+    @TAInterface.is_valid_dataframe
+    def ACOS(df: DataFrame):
+        output = df
+        output["ACOS"] = talib.ACOS(df["Close"])
+        return output
 
     @staticmethod
-    def ASIN():
-        pass
+    @TAInterface.is_valid_dataframe
+    def ASIN(df: DataFrame):
+        output = df
+        output["ASIN"] = talib.ASIN(df["Close"])
+        return output
 
     @staticmethod
-    def ATAN():
-        pass
+    @TAInterface.is_valid_dataframe
+    def ATAN(df: DataFrame):
+        output = df
+        output["ATAN"] = talib.ATAN(df["Close"])
+        return output
 
     @staticmethod
-    def CEIL():
-        pass
+    @TAInterface.is_valid_dataframe
+    def CEIL(df: DataFrame):
+        output = df
+        output["CEIL"] = talib.CEIL(df["Close"])
+        return output
 
     @staticmethod
-    def COS():
-        pass
+    @TAInterface.is_valid_dataframe
+    def COS(df: DataFrame):
+        output = df
+        output["COS"] = talib.COS(df["Close"])
+        return output
 
     @staticmethod
-    def COSH():
-        pass
+    @TAInterface.is_valid_dataframe
+    def COSH(df: DataFrame):
+        output = df
+        output["COSH"] = talib.COSH(df["Close"])
+        return output
 
     @staticmethod
-    def EXP():
-        pass
+    @TAInterface.is_valid_dataframe
+    def EXP(df: DataFrame):
+        output = df
+        output["EXP"] = talib.EXP(df["Close"])
+        return output
 
     @staticmethod
-    def FLOOR():
-        pass
+    @TAInterface.is_valid_dataframe
+    def FLOOR(df: DataFrame):
+        output = df
+        output["FLOOR"] = talib.FLOOR(df["Close"])
+        return output
 
     @staticmethod
-    def LN():
-        pass
+    @TAInterface.is_valid_dataframe
+    def LN(df: DataFrame):
+        output = df
+        output["LN"] = talib.LN(df["Close"])
+        return output
 
     @staticmethod
-    def LOG10():
-        pass
+    @TAInterface.is_valid_dataframe
+    def LOG10(df: DataFrame):
+        output = df
+        output["LOG10"] = talib.LOG10(df["Close"])
+        return output
 
     @staticmethod
-    def SIN():
-        pass
+    @TAInterface.is_valid_dataframe
+    def SIN(df: DataFrame):
+        output = df
+        output["SIN"] = talib.SIN(df["Close"])
+        return output
 
     @staticmethod
-    def SINH():
-        pass
+    @TAInterface.is_valid_dataframe
+    def SINH(df: DataFrame):
+        output = df
+        output["SINH"] = talib.SINH(df["Close"])
+        return output
 
     @staticmethod
-    def SQRT():
-        pass
+    @TAInterface.is_valid_dataframe
+    def SQRT(df: DataFrame):
+        output = df
+        output["SQRT"] = talib.SQRT(df["Close"])
+        return output
 
     @staticmethod
-    def TAN():
-        pass
+    @TAInterface.is_valid_dataframe
+    def TAN(df: DataFrame):
+        output = df
+        output["TAN"] = talib.TAN(df["Close"])
+        return output
 
     @staticmethod
-    def TANH():
-        pass
+    @TAInterface.is_valid_dataframe
+    def TANH(df: DataFrame):
+        output = df
+        output["TANH"] = talib.TANH(df["Close"])
+        return output

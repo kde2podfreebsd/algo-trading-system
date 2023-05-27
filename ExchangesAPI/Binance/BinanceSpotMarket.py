@@ -1,10 +1,10 @@
 import configparser
 import logging
+import os
 from datetime import datetime
 from typing import Any
 from typing import Dict
 from typing import List
-from typing import NoReturn
 from typing import Optional
 from typing import Sequence
 from typing import Union
@@ -14,23 +14,32 @@ from pandas import DataFrame
 
 from Exceptions import BinanceSpotMarketException
 from settings import basedir
-from settings import setup_logger
 from singletonWrapper import singleton
 
-config = configparser.ConfigParser()
-config.read(f"{basedir}/../config.ini")
+# from typing import NoReturn
+# from settings import setup_logger
 
-logger = logging.getLogger(__name__)
-setup_logger(logger=logger)
+config = configparser.ConfigParser()
+config.read(f"{basedir}/config.ini")
+
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+# logger = logging.getLogger(__name__)
+# setup_logger(logger=logger)
 
 
 @singleton
 class BinanceSpotMarket(object):
-    def __init__(
-        self, base_url: Optional[str] = "https://testnet.binance.vision"
-    ) -> NoReturn:
-        self.__apiKey = config["Binance"]["apiKey"]
-        self.__apiSecret = config["Binance"]["apiSecret"]
+    def __init__(self, base_url: Optional[str] = "https://testnet.binance.vision"):
+        # self.__apiKey = config["Binance"]["apiKey"]
+        # self.__apiSecret = config["Binance"]["apiSecret"]
+        self.__apiKey = (
+            "ADRb78f3mJvYZ8lTO7JWXxKTu1rKKJK33W8wil1MUQ8MJmeC5wDFPRwwhai0x6db"
+        )
+        self.__apiSecret = (
+            "4uA4YYCcYGeM1dBALkNhTsx29nG2gVOoZM5CmiusheGMquPL5NlnMl0c2Do3UTPv"
+        )
         self.__client = Spot(
             api_key=self.__apiKey, api_secret=self.__apiSecret, base_url=base_url
         )
@@ -94,9 +103,6 @@ class BinanceSpotMarket(object):
         except Exception:
             raise BinanceSpotMarketException(err=Exception)
 
-    def historical_trades(self):
-        print(self.__client.historical_trades("BTCUSDT"))
-
     def kLines(
         self,
         symbol: str,
@@ -113,11 +119,12 @@ class BinanceSpotMarket(object):
                 startTime=startTime,
                 endTime=endTime,
             )
-            logging.debug(output)
+            # logging.debug(output)
             return output
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            #           raise BinanceSpotMarketException(err=Exception)
+            pass
 
     def ping(self) -> Dict:
         try:
@@ -257,7 +264,8 @@ class BinanceSpotMarket(object):
             return df
 
         except Exception:
-            raise BinanceSpotMarketException(err=Exception)
+            #           raise BinanceSpotMarketException(err=Exception)
+            pass
 
     # def appendDataFrame(self, df1: DataFrame, ticker):
     #     df2 = self.makeKLinesDataFrame(
@@ -276,8 +284,8 @@ if __name__ == "__main__":
     df = b.makeKLinesDataFrame(
         symbol="BTCUSDT",
         bar_interval="1m",
-        startTime=datetime(2023, 4, 16).timestamp(),
-        endTime=datetime(2023, 4, 17).timestamp(),
+        startTime=None,
+        endTime=None,
     )
 
     print(df)
