@@ -1,3 +1,6 @@
+from pandas.core.frame import DataFrame
+
+import talib
 from TaLib.TAInterface import TAInterface
 
 
@@ -6,13 +9,29 @@ class VolumeIndicators(TAInterface):
         super().__init__(max_rows=max_rows, max_columns=max_columns, width=width)
 
     @staticmethod
-    def AD():
-        pass
+    @TAInterface.is_valid_dataframe
+    def AD(df: DataFrame):
+        output = df
+        output["AD"] = talib.AD(df["High"], df["Low"], df["Close"], df["Volume"])
+        return output
 
     @staticmethod
-    def ADOSC():
-        pass
+    @TAInterface.is_valid_dataframe
+    def ADOSC(df: DataFrame, fastperiod: int, slowperiod: int):
+        output = df
+        output[f"ADOSC {fastperiod} {slowperiod}"] = talib.ADOSC(
+            df["High"],
+            df["Low"],
+            df["Close"],
+            df["Volume"],
+            fastperiod=fastperiod,
+            slowperiod=slowperiod,
+        )
+        return output
 
     @staticmethod
-    def OBV():
-        pass
+    @TAInterface.is_valid_dataframe
+    def OBV(df: DataFrame):
+        output = df
+        output["OBV"] = talib.OBV(df["Close"], df["Volume"])
+        return output

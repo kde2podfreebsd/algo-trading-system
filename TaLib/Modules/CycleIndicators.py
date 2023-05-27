@@ -1,3 +1,6 @@
+from pandas.core.frame import DataFrame
+
+import talib
 from TaLib.TAInterface import TAInterface
 
 
@@ -6,21 +9,41 @@ class CycleIndicators(TAInterface):
         super().__init__(max_rows=max_rows, max_columns=max_columns, width=width)
 
     @staticmethod
-    def HT_DCPERIOD():
-        pass
+    @TAInterface.is_valid_dataframe
+    def HT_DCPERIOD(df: DataFrame):
+        output = df
+        output["HT_DCPERIOD"] = talib.HT_DCPERIOD(df["Close"])
+        return output
 
     @staticmethod
-    def HT_DCPHASE():
-        pass
+    @TAInterface.is_valid_dataframe
+    def HT_DCPHASE(df: DataFrame):
+        output = df
+        output["HT_DCPHASE"] = talib.HT_DCPHASE(df["Close"])
+        return output
 
     @staticmethod
-    def HT_PHASOR():
-        pass
+    @TAInterface.is_valid_dataframe
+    def HT_PHASOR(df: DataFrame):
+        output = df
+        (
+            output["inphase"],
+            output["quadrature"],
+        ) = talib.HT_PHASOR(df["Close"])
+        return output
 
     @staticmethod
-    def HT_SINE():
-        pass
+    @TAInterface.is_valid_dataframe
+    def HT_SINE(df: DataFrame):
+        output = df
+        (output["sine"], output["leadsine"]) = talib.HT_SINE(df["Close"])
+        return output
 
-    @staticmethod
-    def HT_TRENDMODE():
-        pass
+
+# OUTPUT - integer (СПРОСИТЬ)
+#     @staticmethod
+#     @TAInterface.is_valid_dataframe
+#     def HT_TRENDMODE(df: DataFrame):
+#         output = df
+#         output['HT_TRENDMODE'] = talib.HT_TRENDMODE(df['Close'])
+#         return output

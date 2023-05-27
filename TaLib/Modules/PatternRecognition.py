@@ -1,3 +1,6 @@
+from pandas.core.frame import DataFrame
+
+import talib
 from TaLib.TAInterface import TAInterface
 
 
@@ -6,245 +9,441 @@ class PatternRecognition(TAInterface):
         super().__init__(max_rows=max_rows, max_columns=max_columns, width=width)
 
     @staticmethod
-    def CDL2CROWS():
+    @TAInterface.is_valid_dataframe
+    def CDL2CROWS(df: DataFrame):
+        output = df
+        output["CDL2CROWS"] = talib.CDL2CROWS(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDL3BLACKCROWS(df: DataFrame):
+        output = df
+        output["CDL3BLACKCROWS"] = talib.CDL3BLACKCROWS(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDL3INSIDE(df: DataFrame):
+        output = df
+        output["CDL3INSIDE"] = talib.CDL3INSIDE(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDL3LINESTRIKE(df: DataFrame):
+        output = df
+        output["CDL3LINESTRIKE"] = talib.CDL3LINESTRIKE(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDL3OUTSIDE(df: DataFrame):
+        output = df
+        output["CDL3OUTSIDE"] = talib.CDL3OUTSIDE(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDL3STARSINSOUTH(df: DataFrame):
+        output = df
+        output["CDL3STARSINSOUTH"] = talib.CDL3STARSINSOUTH(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDL3WHITESOLDIERS(df: DataFrame):
+        output = df
+        output["CDL3WHITESOLDIERS"] = talib.CDL3WHITESOLDIERS(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDLABANDONEDBABY(df: DataFrame, penetration: float):
+        output = df
+        output["CDLABANDONEDBABY"] = talib.CDLABANDONEDBABY(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+            penetration=penetration,
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDLADVANCEBLOCK(df: DataFrame):
+        output = df
+        output["CDLADVANCEBLOCK"] = talib.CDLADVANCEBLOCK(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDLBELTHOLD(df: DataFrame):
+        output = df
+        output["CDLBELTHOLD"] = talib.CDLBELTHOLD(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDLBREAKAWAY(df: DataFrame):
+        output = df
+        output["CDLBREAKAWAY"] = talib.CDLBREAKAWAY(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDLCLOSINGMARUBOZU(df: DataFrame):
+        output = df
+        output["CDLCLOSINGMARUBOZU"] = talib.CDLCLOSINGMARUBOZU(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDLCONCEALBABYSWALL(df: DataFrame):
+        output = df
+        output["CDLCONCEALBABYSWALL"] = talib.CDLCONCEALBABYSWALL(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDLCOUNTERATTACK(df: DataFrame):
+        output = df
+        output["CDLCOUNTERATTACK"] = talib.CDLCOUNTERATTACK(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDLDARKCLOUDCOVER(df: DataFrame, penetration: float):
+        output = df
+        output["CDLDARKCLOUDCOVER"] = talib.CDLDARKCLOUDCOVER(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+            penetration=penetration,
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDLDOJI(df: DataFrame):
+        output = df
+        output["CDLDOJI"] = talib.CDLDOJI(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDLDOJISTAR(df: DataFrame):
+        output = df
+        output["CDLDOJISTAR"] = talib.CDLDOJISTAR(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDLDRAGONFLYDOJI(df: DataFrame):
+        output = df
+        output["CDLDRAGONFLYDOJI"] = talib.CDLDRAGONFLYDOJI(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDLENGULFING(df: DataFrame):
+        output = df
+        output["CDLENGULFING"] = talib.CDLENGULFING(
+            df["Open"],
+            df["High"],
+            df["Low"],
+            df["Close"],
+        )
+        return output
+
+    @staticmethod
+    @TAInterface.is_valid_dataframe
+    def CDLEVENINGDOJISTAR(df: DataFrame):
         pass
 
     @staticmethod
-    def CDL3BLACKCROWS():
+    @TAInterface.is_valid_dataframe
+    def CDLEVENINGSTAR(df: DataFrame):
         pass
 
     @staticmethod
-    def CDL3INSIDE():
+    @TAInterface.is_valid_dataframe
+    def CDLGAPSIDESIDEWHITE(df: DataFrame):
         pass
 
     @staticmethod
-    def CDL3LINESTRIKE():
+    @TAInterface.is_valid_dataframe
+    def CDLGRAVESTONEDOJI(df: DataFrame):
         pass
 
     @staticmethod
-    def CDL3OUTSIDE():
+    @TAInterface.is_valid_dataframe
+    def CDLHAMMER(df: DataFrame):
         pass
 
     @staticmethod
-    def CDL3STARSINSOUTH():
+    @TAInterface.is_valid_dataframe
+    def CDLHANGINGMAN(df: DataFrame):
         pass
 
     @staticmethod
-    def CDL3WHITESOLDIERS():
+    @TAInterface.is_valid_dataframe
+    def CDLHARAMI(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLABANDONEDBABY():
+    @TAInterface.is_valid_dataframe
+    def CDLHARAMICROSS(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLADVANCEBLOCK():
+    @TAInterface.is_valid_dataframe
+    def CDLHIGHWAVE(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLBELTHOLD():
+    @TAInterface.is_valid_dataframe
+    def CDLHIKKAKE(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLBREAKAWAY():
+    @TAInterface.is_valid_dataframe
+    def CDLHIKKAKEMOD(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLCLOSINGMARUBOZU():
+    @TAInterface.is_valid_dataframe
+    def CDLHOMINGPIGEON(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLCONCEALBABYSWALL():
+    @TAInterface.is_valid_dataframe
+    def CDLIDENTICAL3CROWS(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLCOUNTERATTACK():
+    @TAInterface.is_valid_dataframe
+    def CDLINNECK(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLDARKCLOUDCOVER():
+    @TAInterface.is_valid_dataframe
+    def CDLINVERTEDHAMMER(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLDOJI():
+    @TAInterface.is_valid_dataframe
+    def CDLKICKING(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLDOJISTAR():
+    @TAInterface.is_valid_dataframe
+    def CDLKICKINGBYLENGTH(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLDRAGONFLYDOJI():
+    @TAInterface.is_valid_dataframe
+    def CDLLADDERBOTTOM(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLENGULFING():
+    @TAInterface.is_valid_dataframe
+    def CDLLONGLEGGEDDOJI(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLEVENINGDOJISTAR():
+    @TAInterface.is_valid_dataframe
+    def CDLLONGLINE(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLEVENINGSTAR():
+    @TAInterface.is_valid_dataframe
+    def CDLMARUBOZU(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLGAPSIDESIDEWHITE():
+    @TAInterface.is_valid_dataframe
+    def CDLMATCHINGLOW(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLGRAVESTONEDOJI():
+    @TAInterface.is_valid_dataframe
+    def CDLMATHOLD(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLHAMMER():
+    @TAInterface.is_valid_dataframe
+    def CDLMORNINGDOJISTAR(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLHANGINGMAN():
+    @TAInterface.is_valid_dataframe
+    def CDLMORNINGSTAR(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLHARAMI():
+    @TAInterface.is_valid_dataframe
+    def CDLONNECK(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLHARAMICROSS():
+    @TAInterface.is_valid_dataframe
+    def CDLPIERCING(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLHIGHWAVE():
+    @TAInterface.is_valid_dataframe
+    def CDLRICKSHAWMAN(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLHIKKAKE():
+    @TAInterface.is_valid_dataframe
+    def CDLRISEFALL3METHODS(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLHIKKAKEMOD():
+    @TAInterface.is_valid_dataframe
+    def CDLSEPARATINGLINES(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLHOMINGPIGEON():
+    @TAInterface.is_valid_dataframe
+    def CDLSHOOTINGSTAR(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLIDENTICAL3CROWS():
+    @TAInterface.is_valid_dataframe
+    def CDLSHORTLINE(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLINNECK():
-        pass
-
-    @staticmethod
-    def CDLINVERTEDHAMMER():
-        pass
-
-    @staticmethod
-    def CDLKICKING():
-        pass
-
-    @staticmethod
-    def CDLKICKINGBYLENGTH():
-        pass
-
-    @staticmethod
-    def CDLLADDERBOTTOM():
-        pass
-
-    @staticmethod
-    def CDLLONGLEGGEDDOJI():
-        pass
-
-    @staticmethod
-    def CDLLONGLINE():
-        pass
-
-    @staticmethod
-    def CDLMARUBOZU():
-        pass
-
-    @staticmethod
-    def CDLMATCHINGLOW():
-        pass
-
-    @staticmethod
-    def CDLMATHOLD():
-        pass
-
-    @staticmethod
-    def CDLMORNINGDOJISTAR():
-        pass
-
-    @staticmethod
-    def CDLMORNINGSTAR():
-        pass
-
-    @staticmethod
-    def CDLONNECK():
-        pass
-
-    @staticmethod
-    def CDLPIERCING():
-        pass
-
-    @staticmethod
-    def CDLRICKSHAWMAN():
-        pass
-
-    @staticmethod
-    def CDLRISEFALL3METHODS():
-        pass
-
-    @staticmethod
-    def CDLSEPARATINGLINES():
-        pass
-
-    @staticmethod
-    def CDLSHOOTINGSTAR():
-        pass
-
-    @staticmethod
-    def CDLSHORTLINE():
-        pass
-
-    @staticmethod
+    @TAInterface.is_valid_dataframe
     def CDLSPINNINGTOP():
         pass
 
     @staticmethod
-    def CDLSTALLEDPATTERN():
+    @TAInterface.is_valid_dataframe
+    def CDLSTALLEDPATTERN(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLSTICKSANDWICH():
+    @TAInterface.is_valid_dataframe
+    def CDLSTICKSANDWICH(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLTAKURI():
+    @TAInterface.is_valid_dataframe
+    def CDLTAKURI(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLTASUKIGAP():
+    @TAInterface.is_valid_dataframe
+    def CDLTASUKIGAP(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLTHRUSTING():
+    @TAInterface.is_valid_dataframe
+    def CDLTHRUSTING(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLTRISTAR():
+    @TAInterface.is_valid_dataframe
+    def CDLTRISTAR(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLUNIQUE3RIVER():
+    @TAInterface.is_valid_dataframe
+    def CDLUNIQUE3RIVER(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLUPSIDEGAP2CROWS():
+    @TAInterface.is_valid_dataframe
+    def CDLUPSIDEGAP2CROWS(df: DataFrame):
         pass
 
     @staticmethod
-    def CDLXSIDEGAP3METHODS():
+    @TAInterface.is_valid_dataframe
+    def CDLXSIDEGAP3METHODS(df: DataFrame):
         pass
