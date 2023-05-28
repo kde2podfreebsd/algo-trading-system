@@ -254,6 +254,26 @@ service-identity = ">=21.1.0"
 Twisted = ">=21.2.0"
 
 [[package]]
+name = "binance-futures-connector"
+version = "3.3.1"
+description = "This is a lightweight library that works as a connector to Binance Futures public API."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "binance-futures-connector-3.3.1.tar.gz", hash = "sha256:7514e8e1bde74cd1f1c049515de00ba6fb6c5d91e08f1a84e86268f5a2777e31"},
+    {file = "binance_futures_connector-3.3.1-py3-none-any.whl", hash = "sha256:56bdfa80fd351e8de13d6911ebf06319c903184eb1aa9bd175a2c9b76ef1ac25"},
+]
+
+[package.dependencies]
+autobahn = ">=21.2.1"
+pycryptodome = ">=3.15.0"
+pyOpenSSL = ">=19.0.0"
+requests = ">=2.25.1"
+service-identity = ">=21.1.0"
+Twisted = ">=22.2.0"
+
+[[package]]
 name = "certifi"
 version = "2022.12.7"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -2597,4 +2617,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "b7cb133b82c79eb4fc9293d76e98bc8803114c1b99e2bab0b8691b84ab6477f6"
+content-hash = "6b37cee33bb0c9727d27cb57843405607e156408654a7603d339b0f158584f17"

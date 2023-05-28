@@ -17,6 +17,8 @@ from settings import basedir
 from settings import setup_logger
 from settings import singleton
 
+# from datetime import timezone
+
 # from typing import NoReturn
 
 config = configparser.ConfigParser()
@@ -256,9 +258,10 @@ class BinanceSpotMarket(BinanceInterface):
 
             return df
 
-        except Exception:
+        except Exception as e:
             #           raise BinanceSpotMarketException(err=Exception)
-            pass
+            # pass
+            print(e)
 
     # def appendDataFrame(self, df1: DataFrame, ticker):
     #     df2 = self.makeKLinesDataFrame(
@@ -272,13 +275,25 @@ class BinanceSpotMarket(BinanceInterface):
 
 
 if __name__ == "__main__":
+    # print(datetime.fromtimestamp(1639204722760/1000))
+    # # print(int(datetime(2022, 3, 8, 15, 12, 11).timestamp()))
+    # print(1639204722760)
+    t1 = (
+        datetime.strptime("5.11.2021 00:00:00,00", "%d.%m.%Y %H:%M:%S,%f").timestamp()
+        * 1000
+    )
+    t2 = (
+        datetime.strptime("12.12.2021 00:00:00,00", "%d.%m.%Y %H:%M:%S,%f").timestamp()
+        * 1000
+    )
+    print(t1, t2)
+    print(int(t1), int(t2))
     b = BinanceSpotMarket()
-    print(datetime.fromtimestamp(1643341200000 / 1000))
     df = b.makeKLinesDataFrame(
         symbol="BTCUSDT",
-        bar_interval="1m",
-        startTime=None,
-        endTime=None,
+        bar_interval="1d",
+        startTime=int(t1),
+        endTime=int(t2),
     )
 
     print(df)
