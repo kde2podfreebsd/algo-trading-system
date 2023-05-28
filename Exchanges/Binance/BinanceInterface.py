@@ -16,9 +16,6 @@ from Exchanges.ExchangesInterface import ExchangesInterface
 
 
 class BinanceInterface(ExchangesInterface):
-    __apiSecret: str
-    __apiKey: str
-    exchangeName: str
     __metaclass__ = ABCMeta
 
     @property

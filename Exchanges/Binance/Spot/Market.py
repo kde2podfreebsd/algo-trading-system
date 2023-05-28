@@ -28,8 +28,6 @@ setup_logger(logger=logger)
 
 @singleton
 class BinanceSpotMarket(BinanceInterface):
-    __client: Spot
-
     def __init__(self, base_url: Optional[str] = "https://testnet.binance.vision"):
         # self.__apiKey = config["Binance"]["apiKey"]
         # self.__apiSecret = config["Binance"]["apiSecret"]
