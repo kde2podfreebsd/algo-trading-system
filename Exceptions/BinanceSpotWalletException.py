@@ -1,4 +1,5 @@
 import logging
+from logging import Logger
 
 from binance.error import ClientError
 from binance.error import ParameterArgumentError
@@ -10,7 +11,11 @@ from binance.error import ServerError
 from settings import setup_logger
 
 
-class BinanceSpotMarginException(Exception):
+class BinanceSpotWalletException(Exception):
+
+    error: Exception | ClientError | ServerError | ParameterRequiredError | ParameterValueError | ParameterTypeError | ParameterArgumentError
+    logger: Logger
+
     def __init__(
         self,
         err: Exception
@@ -27,4 +32,4 @@ class BinanceSpotMarginException(Exception):
         logging.error(self.error)
 
     def __str__(self):
-        return f"BinanceSDK.Binance.Spot.Margin.Exception: {self.error}"
+        return f"BinanceSDK.Binance.Spot.Wallet.Exception: {self.error}"

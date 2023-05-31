@@ -10,7 +10,7 @@ from binance.error import ServerError
 from settings import setup_logger
 
 
-class BinanceSpotMarginException(Exception):
+class BinanceSpotTradeException(Exception):
     def __init__(
         self,
         err: Exception
@@ -27,4 +27,4 @@ class BinanceSpotMarginException(Exception):
         logging.error(self.error)
 
     def __str__(self):
-        return f"BinanceSDK.Binance.Spot.Margin.Exception: {self.error}"
+        return f"BinanceSDK.Binance.Spot.Trade.Exception: {self.error}"

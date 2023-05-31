@@ -766,7 +766,7 @@ class BinanceSpotMargin(BinanceInterface):
     ):
         """
         symbols (str, optional): Max 5 symbols can be sent; separated by ",". e.g. "BTCUSDT,BNBUSDT,ADAUSDT"
-        recvWindow (int, optional): The value cannot be greater than 6000000
+        recvWindow (int, optional): The value cannot be greater than 60000
         """
         try:
             if len(symbols.split(",")) > 5:
@@ -790,7 +790,7 @@ class BinanceSpotMargin(BinanceInterface):
             recvWindow: Optional[int],
     ):
         """
-        recvWindow (int, optional): The value cannot be greater than 6000000
+        recvWindow (int, optional): The value cannot be greater than 60000
         """
         try:
             if recvWindow > 60000:
@@ -808,7 +808,7 @@ class BinanceSpotMargin(BinanceInterface):
 
     def isolated_margin_all_pairs(self, recvWindow: Optional[int]):
         """
-        recvWindow (int, optional): The value cannot be greater than 6000000
+        recvWindow (int, optional): The value cannot be greater than 60000
         """
         try:
             if recvWindow > 60000:
@@ -830,7 +830,7 @@ class BinanceSpotMargin(BinanceInterface):
         """
         spotBNBBurn (str, optional): "true" or "false"; Determines whether to use BNB to pay for trading fees on SPOT
         interestBNBBurn (str, optional): "true" or "false"; Determines whether to use BNB to pay for margin loan's interest
-        recvWindow (int, optional): The value cannot be greater than 6000000
+        recvWindow (int, optional): The value cannot be greater than 60000
         """
         try:
             if spotBNBBurn != "true" and spotBNBBurn != "false":
@@ -853,7 +853,7 @@ class BinanceSpotMargin(BinanceInterface):
 
     def bnbBurn_status(self, recvWindow: Optional[int]):
         """
-        recvWindow (int, optional): The value cannot be greater than 6000000
+        recvWindow (int, optional): The value cannot be greater than 60000
         """
         try:
             if recvWindow > 60000:
