@@ -47,6 +47,13 @@ class BinanceSpotMarket(BinanceInterface):
         startTime: Optional[int] = None,
         endTime: Optional[int] = None,
     ) -> Sequence[Dict[str, Union[str | int | float | bool]]]:
+        """
+        symbol (str): the trading pair
+        limit (int, optional): limit the results. Default 500; max 1000.
+        formId (int, optional): id to get aggregate trades from INCLUSIVE.
+        startTime (int, optional): Timestamp in ms to get aggregate trades from INCLUSIVE.
+        endTime (int, optional): Timestamp in ms to get aggregate trades until INCLUSIVE.
+        """
         try:
             output = self.__client.agg_trades(
                 symbol=symbol,
@@ -70,9 +77,13 @@ class BinanceSpotMarket(BinanceInterface):
         except Exception:
             raise BinanceSpotMarketException
 
-    def book_ticker(self, symbols: List[str]) -> Sequence[Dict[str, str]]:
+    def book_ticker(self, symbol: Optional[str], symbols: List[str]) -> Sequence[Dict[str, str]]:
+        """
+        symbol (str, optional): the trading pair
+        symbols (list, optional): list of trading pairs
+        """
         try:
-            output = self.__client.book_ticker(symbols=symbols)
+            output = self.__client.book_ticker(symbol=symbol, symbols=symbols)
             logging.debug(output)
             return output
 
@@ -80,18 +91,38 @@ class BinanceSpotMarket(BinanceInterface):
             raise BinanceSpotMarketException
 
     def depth(
-        self, symbol: str, limit: Optional[int] = None
+        self,
+        symbol: str,
+        limit: Optional[int] = None,
     ) -> Dict[str, Union[Sequence[List[str]] | int]]:
+        """
+        limit: limit the results. Default 100; max 5000. If limit > 5000, then the response will truncate to 5000.
+        """
         try:
             output = self.__client.depth(symbol=symbol, limit=limit)
             logging.debug(output)
             return output
+
         except Exception:
             raise BinanceSpotMarketException
 
-    def exchange_info(self, symbols: List[str]) -> Dict[str, Union[Any]]:
+    def exchange_info(
+            self,
+            symbol: Optional[str],
+            symbols: List[str],
+            permissions: List[str],
+    ) -> Dict[str, Union[Any]]:
+        """
+        symbol: the trading pair
+        symbols: list of trading pairs
+        permissions: display all symbols with the permissions matching the parameter provided (eg.SPOT, MARGIN, LEVERAGED)
+        """
         try:
-            output = self.__client.exchange_info(symbols=symbols)
+            output = self.__client.exchange_info(
+                symbol=symbol,
+                symbols=symbols,
+                permissions=permissions,
+            )
             logging.debug(output)
             return output
 
@@ -106,6 +137,12 @@ class BinanceSpotMarket(BinanceInterface):
         startTime: Optional[int] = None,
         endTime: Optional[int] = None,
     ) -> Sequence[List[str]]:
+        """
+        interval (str): the interval of kline, e.g 1s, 1m, 5m, 1h, 1d, etc.
+        limit (int, optional): limit the results. Default 500; max 1000.
+        startTime (int, optional): Timestamp in ms to get aggregate trades from INCLUSIVE.
+        endTime (int, optional): Timestamp in ms to get aggregate trades until INCLUSIVE.
+        """
         try:
             output = self.__client.klines(
                 symbol=symbol,
@@ -131,11 +168,23 @@ class BinanceSpotMarket(BinanceInterface):
             raise BinanceSpotMarketException
 
     def rolling_window_ticker(
-        self, symbol: str, windowSize: str = "1d", requestType: str = "FULL"
+        self,
+        symbol: str,
+        symbols: Optional[str],
+        windowSize: Optional[str] = "1d",
+        requestType: str = "FULL"
     ) -> Dict[str, Union[str | int | float]]:
+        """
+        symbol (str, optional): the trading pair
+        symbols (str, optional): : list of trading pairs. The maximum number of symbols allowed in a request is 100.
+        windowSize (str, optional): Defaults to 1d if no parameter provided.
+        """
         try:
             output = self.__client.rolling_window_ticker(
-                symbol=symbol, windowSize=windowSize, type=requestType
+                symbol=symbol,
+                symbols=symbols,
+                windowSize=windowSize,
+                type=requestType
             )
             logging.debug(output)
             return output
@@ -144,19 +193,33 @@ class BinanceSpotMarket(BinanceInterface):
             raise BinanceSpotMarketException
 
     def ticker_24hr(
-        self, symbols: List[str], requestType: str = "FULL"
+        self,
+        symbol: Optional[str] = None,
+        symbols: List[str] = None,
     ) -> Sequence[Dict[str, Union[str | int | float]]]:
+        """
+        symbol (str, optional): the trading pair
+        symbols (list, optional): list of trading pairs
+        """
         try:
-            output = self.__client.ticker_24hr(symbols=symbols, type=requestType)
+            output = self.__client.ticker_24hr(symbol=symbol, symbols=symbols)
             logging.debug(output)
             return output
 
         except Exception:
             raise BinanceSpotMarketException
 
-    def ticker_price(self, symbols: List[str]) -> Sequence[Dict[str, str]]:
+    def ticker_price(
+            self,
+            symbol: Optional[str] = None,
+            symbols: List[str] = None,
+    ) -> Sequence[Dict[str, str]]:
+        """
+        symbol (str, optional): the trading pair
+        symbols (list, optional): list of trading pairs
+        """
         try:
-            output = self.__client.ticker_price(symbols=symbols)
+            output = self.__client.ticker_price(symbol=symbol, symbols=symbols)
             logging.debug(output)
             return output
 
@@ -173,8 +236,13 @@ class BinanceSpotMarket(BinanceInterface):
             raise BinanceSpotMarketException
 
     def trades(
-        self, symbol: str, limit: Optional[int] = 10
+        self,
+        symbol: str,
+        limit: Optional[int] = 500,
     ) -> Dict[str, Union[str | int | float | bool]]:
+        """
+        limit (int, optional): limit the results. Default 500; max 1000.
+        """
         try:
             output = self.__client.trades(symbol=symbol, limit=limit)
             logging.debug(output)
@@ -191,6 +259,12 @@ class BinanceSpotMarket(BinanceInterface):
         startTime: Optional[int] = 1400000000000,
         endTime: Optional[int] = None,
     ) -> Sequence[List[str]]:
+        """
+        interval (str): the interval of kline, e.g 1s, 1m, 5m, 1h, 1d, etc.
+        limit (int, optional): limit the results. Default 500; max 1000.
+        startTime (int, optional): Timestamp in ms to get aggregate trades from INCLUSIVE.
+        endTime (int, optional): Timestamp in ms to get aggregate trades until INCLUSIVE.
+        """
         try:
             endTime = endTime if endTime is not None else self.time().get("serverTime")
             output = self.__client.ui_klines(

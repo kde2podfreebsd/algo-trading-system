@@ -59,17 +59,56 @@ class UMFuturesClient(object):
             self,
             symbol: str,
             side: str,
-            orderType: str,
-            quantity: float
+            type: str,
+            quantity: Optional[float],
+            positionSide: Optional[str],
+            timeInForce: Optional[str],
+            reduceOnly: Optional[str],
+            price: Optional[float],
+            newClientOrderId: Optional[str],
+            stopPrice: Optional[float],
+            closePosition: Optional[str],
+            activationPrice: Optional[float],
+            callbackRate: Optional[float],
+            recvWindow: Optional[int],
+            workingType: Optional[str] = 'CONTRACT_PRICE',
+            priceProtect: Optional[str] = 'FALSE',
+            newOrderRespType: Optional[float] = 'ACK',
     ):
+        """
+        parameter positionSide: optional string. Default BOTH for One-way Mode; LONG or SHORT for Hedge Mode. It must be passed in Hedge Mode.
+        parameter newClientOrderId: optional string. An unique ID among open orders. Automatically generated if not sent.
+        parameter stopPrice: optional float. Use with STOP/STOP_MARKET or TAKE_PROFIT/TAKE_PROFIT_MARKET orders.
+        parameter closePosition: optional string. true or false; Close-All, use with STOP_MARKET or TAKE_PROFIT_MARKET.
+        parameter activationPrice: optional float. Use with TRAILING_STOP_MARKET orders, default is the latest price (supporting different workingType).
+        parameter callbackRate: optional float. Use with TRAILING_STOP_MARKET orders, min 0.1, max 5 where 1 for 1%.
+        parameter workingType: optional string. stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE".
+        parameter priceProtect: optional string. "TRUE" or "FALSE", default "FALSE". Use with STOP/STOP_MARKET or TAKE_PROFIT/TAKE_PROFIT_MARKET orders.
+        parameter newOrderRespType: optional float. "ACK" or "RESULT", default "ACK".
+        parameter recvWindow: optional int
+        """
         try:
             response = self.um_futures_client.new_order(
                 symbol=symbol,
                 side=side,
-                type=orderType,
+                type=type,
                 quantity=quantity,
+                positionSide=positionSide,
+                timeInForce=timeInForce,
+                reduceOnly=reduceOnly,
+                price=price,
+                newClientOrderId=newClientOrderId,
+                stopPrice=stopPrice,
+                closePosition=closePosition,
+                activationPrice=activationPrice,
+                callbackRate=callbackRate,
+                workingType=workingType,
+                priceProtect=priceProtect,
+                newOrderRespType=newOrderRespType,
+                recvWindow=recvWindow,
             )
             logging.info(response)
+            return response
         except ClientError as error:
             logging.error(
                 "Found error. status: {}, error code: {}, error message: {}".format(
@@ -77,10 +116,32 @@ class UMFuturesClient(object):
                 )
             )
 
-    def getAccountTrades(self):
+    def getAccountTrades(
+            self,
+            symbol: Optional[str],
+            pair: Optional[str],
+            startTime: Optional[str],
+            endTime: Optional[str],
+            fromId: Optional[int],
+            recvWindow: Optional[int],
+            limit: Optional[int] = 500,
+    ):
+        """
+        fromId: optional int; trade ID to fetch from, default is to get the most recent trades.
+        limit: optional int; default 500, max 1000
+        - If startTime and endTime are both not sent, then the last 7 days' data will be returned.
+        - The time between startTime and endTime cannot be longer than 7 days.
+        - The parameter fromId cannot be sent with startTime or endTime.
+        """
         try:
             response = self.um_futures_client.get_account_trades(
-                symbol="BTCUSDT", recvWindow=6000
+                symbol=symbol,
+                pair=pair,
+                startTime=startTime,
+                endTime=endTime,
+                fromId=fromId,
+                recvWindow=recvWindow,
+                limit=limit,
             )
             return response
         except ClientError as error:
@@ -142,12 +203,56 @@ class UMFuturesClient(object):
                 )
             )
 
-    def newOrderTest(self, symbol: str, side: str, type: str):
+    def newOrderTest(
+            self,
+            symbol: str,
+            side: str,
+            type: str,
+            quantity: Optional[float],
+            positionSide: Optional[str],
+            timeInForce: Optional[str],
+            reduceOnly: Optional[str],
+            price: Optional[float],
+            newClientOrderId: Optional[str],
+            stopPrice: Optional[float],
+            closePosition: Optional[str],
+            activationPrice: Optional[float],
+            callbackRate: Optional[float],
+            recvWindow: Optional[int],
+            workingType: Optional[str] = 'CONTRACT_PRICE',
+            priceProtect: Optional[str] = 'FALSE',
+            newOrderRespType: Optional[float] = 'ACK',
+    ):
+        """
+        positionSide: optional string. Default BOTH for One-way Mode; LONG or SHORT for Hedge Mode. It must be passed in Hedge Mode.
+        newClientOrderId: optional string. An unique ID among open orders. Automatically generated if not sent.
+        stopPrice: optional float. Use with STOP/STOP_MARKET or TAKE_PROFIT/TAKE_PROFIT_MARKET orders.
+        closePosition: optional string. true or false; Close-All, use with STOP_MARKET or TAKE_PROFIT_MARKET.
+        activationPrice: optional float. Use with TRAILING_STOP_MARKET orders, default is the latest price (supporting different workingType).
+        callbackRate: optional float. Use with TRAILING_STOP_MARKET orders, min 0.1, max 5 where 1 for 1%.
+        workingType: optional string. stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE".
+        priceProtect: optional string. "TRUE" or "FALSE", default "FALSE". Use with STOP/STOP_MARKET or TAKE_PROFIT/TAKE_PROFIT_MARKET orders.
+        newOrderRespType: optional float. "ACK" or "RESULT", default "ACK".
+        """
         try:
             response = self.um_futures_client.new_order_test(
                 symbol=symbol,
                 side=side,
                 type=type,
+                quantity=quantity,
+                positionSide=positionSide,
+                timeInForce=timeInForce,
+                reduceOnly=reduceOnly,
+                price=price,
+                newClientOrderId=newClientOrderId,
+                stopPrice=stopPrice,
+                closePosition=closePosition,
+                activationPrice=activationPrice,
+                callbackRate=callbackRate,
+                workingType=workingType,
+                priceProtect=priceProtect,
+                newOrderRespType=newOrderRespType,
+                recvWindow=recvWindow,
             )
             return response
         except ClientError as error:
@@ -157,12 +262,48 @@ class UMFuturesClient(object):
                 )
             )
 
-    def newBatchOrder(self, symbol: str, side: str, type: str):
+    def newBatchOrder(
+            self,
+            batchOrders: list,
+            symbol: str,
+            side: str,
+            type: str,
+            positionSide: Optional[str],
+            timeInForce: Optional[str],
+            quantity: Optional[float],
+            reduceOnly: Optional[str],
+            price: Optional[float],
+            newClientOrderId: Optional[str],
+            stopPrice: Optional[float],
+            closePosition: Optional[str],
+            activationPrice: Optional[float],
+            callbackRate: Optional[float],
+            recvWindow: Optional[int],
+            workingType: Optional[str] = 'CONTRACT_PRICE',
+            priceProtect: Optional[str] = 'FALSE',
+            newOrderRespType: Optional[float] = 'ACK',
+
+    ):
         try:
             response = self.um_futures_client.new_batch_order(
+                batchOrders=batchOrders,
                 symbol=symbol,
                 side=side,
                 type=type,
+                positionSide=positionSide,
+                timeInForce=timeInForce,
+                quantity=quantity,
+                reduceOnly=reduceOnly,
+                price=price,
+                newClientOrderId=newClientOrderId,
+                stopPrice=stopPrice,
+                closePosition=closePosition,
+                activationPrice=activationPrice,
+                callbackRate=callbackRate,
+                workingType=workingType,
+                priceProtect=priceProtect,
+                newOrderRespType=newOrderRespType,
+                recvWindow=recvWindow,
             )
             return response
         except ClientError as error:
@@ -175,12 +316,14 @@ class UMFuturesClient(object):
     def queryOrder(
             self,
             symbol: str,
-            orderId: int = None,
-            origClientOrderId: str = None,
+            recvWindow: Optional[int],
+            orderId: Optional[int] = None,
+            origClientOrderId: Optional[str] = None,
     ):
         try:
             response = self.um_futures_client.query_order(
                 symbol=symbol,
+                recvWindow=recvWindow,
                 orderId=orderId,
                 origClientOrderId=origClientOrderId,
             )
@@ -195,12 +338,16 @@ class UMFuturesClient(object):
     def cancelOrder(
             self,
             symbol: str,
-            orderId: int = None,
-            origClientOrderId: str = None,
+            newClientOrderId: Optional[str],
+            recvWindow: Optional[int],
+            orderId: Optional[int] = None,
+            origClientOrderId: Optional[str] = None,
     ):
         try:
             response = self.um_futures_client.cancel_order(
                 symbol=symbol,
+                newClientOrderId=newClientOrderId,
+                recvWindow=recvWindow,
                 orderId=orderId,
                 origClientOrderId=origClientOrderId,
             )
@@ -212,9 +359,9 @@ class UMFuturesClient(object):
                 )
             )
 
-    def cancelOpenOrders(self, symbol: str):
+    def cancelOpenOrders(self, symbol: str, recvWindow: Optional[int]):
         try:
-            response = self.um_futures_client.cancel_open_orders(symbol=symbol)
+            response = self.um_futures_client.cancel_open_orders(symbol=symbol, recvWindow=recvWindow)
             return response
         except ClientError as error:
             logging.error(
@@ -227,13 +374,21 @@ class UMFuturesClient(object):
             self,
             symbol: str,
             orderIdList: list,
-            origClientOrderIdList: list
+            origClientOrderIdList: list,
+            recvWindow: Optional[int],
     ):
+        """
+        orderIdList: int list, max length 10 e.g. [1234567,2345678]
+        origClientOrderIdList: string list, max length 10 e.g. ["my_id_1","my_id_2"], encode the double quotes.
+                                No space after comma.
+        - Either orderIdList or origClientOrderIdList must be sent.
+        """
         try:
             response = self.um_futures_client.cancel_batch_order(
                 symbol=symbol,
                 orderIdList=orderIdList,
                 origClientOrderIdList=origClientOrderIdList,
+                recvWindow=recvWindow,
             )
             return response
         except ClientError as error:
@@ -243,11 +398,30 @@ class UMFuturesClient(object):
                 )
             )
 
-    def countdownCancelOrder(self, symbol: str, countdownTime: int):
+    def countdownCancelOrder(
+            self,
+            symbol: str,
+            countdownTime: int,
+            recvWindow: Optional[int],
+    ):
+        """
+        countdownTime: int list, countdown time, 1000 for 1 second. 0 to cancel the timer
+        - The endpoint should be called repeatedly as heartbeats so that the existing countdown time can be canceled
+            and replaced by a new one.
+        - Example usage:
+            - Call this endpoint at 30s intervals with an countdownTime of 120000 (120s).
+            - If this endpoint is not called within 120 seconds, all your orders of the specified symbol will be
+                automatically canceled.
+            - If this endpoint is called with an countdownTime of 0, the countdown timer will be stopped.
+        - The system will check all countdowns approximately every 10 milliseconds, so please note that sufficient
+            redundancy should be considered when using this function.
+        - We do not recommend setting the countdown time to be too precise or too small.
+        """
         try:
             response = self.um_futures_client.countdown_cancel_order(
                 symbol=symbol,
                 countdownTime=countdownTime,
+                recvWindow=recvWindow,
             )
             return response
         except ClientError as error:
@@ -260,12 +434,18 @@ class UMFuturesClient(object):
     def getOpenOrders(
             self,
             symbol: str,
-            orderId: int = None,
-            origClientOrderId: str = None,
+            recvWindow: Optional[int],
+            orderId: Optional[int] = None,
+            origClientOrderId: Optional[str] = None,
     ):
+        """
+        - Either orderId or origClientOrderId must be sent
+        - If the queried order has been filled or cancelled, the error message "Order does not exist" will be returned.
+        """
         try:
             response = self.um_futures_client.get_open_orders(
                 symbol=symbol,
+                recvWindow=recvWindow,
                 orderId=orderId,
                 origClientOrderId=origClientOrderId,
             )
@@ -277,9 +457,16 @@ class UMFuturesClient(object):
                 )
             )
 
-    def getOrders(self):
+    def getOrders(
+            self,
+            symbol: Optional[str],
+            recvWindow: Optional[int],
+    ):
         try:
-            response = self.um_futures_client.get_orders()
+            response = self.um_futures_client.get_orders(
+                symbol=symbol,
+                recvWindow=recvWindow,
+            )
             return response
         except ClientError as error:
             logging.error(
@@ -288,9 +475,28 @@ class UMFuturesClient(object):
                 )
             )
 
-    def getAllOrders(self, symbol: str):
+    def getAllOrders(
+            self,
+            symbol: str,
+            orderId: Optional[int],
+            startTime: Optional[int],
+            endTime: Optional[int],
+            recvWindow: Optional[int],
+            limit: Optional[int] = 50,
+    ):
+        """
+        limit: optional int; default 50, max 100.
+        recvWindow: optional int; the value cannot be greater than 60000
+        """
         try:
-            response = self.um_futures_client.get_all_orders(symbol=symbol)
+            response = self.um_futures_client.get_all_orders(
+                symbol=symbol,
+                orderId=orderId,
+                startTime=startTime,
+                endTime=endTime,
+                recvWindow=recvWindow,
+                limit=limit,
+            )
             return response
         except ClientError as error:
             logging.error(
@@ -299,9 +505,9 @@ class UMFuturesClient(object):
                 )
             )
 
-    def balance(self):
+    def balance(self, recvWindow: Optional[int]):
         try:
-            response = self.um_futures_client.balance()
+            response = self.um_futures_client.balance(recvWindow=recvWindow)
             return response
         except ClientError as error:
             logging.error(
@@ -310,9 +516,9 @@ class UMFuturesClient(object):
                 )
             )
 
-    def account(self):
+    def account(self, recvWindow: Optional[int]):
         try:
-            response = self.um_futures_client.account()
+            response = self.um_futures_client.account(recvWindow=recvWindow)
             return response
         except ClientError as error:
             logging.error(
@@ -321,11 +527,20 @@ class UMFuturesClient(object):
                 )
             )
 
-    def changeLeverage(self, symbol: str, leverage: int, ):
+    def changeLeverage(
+            self,
+            symbol: str,
+            leverage: int,
+            recvWindow: Optional[int],
+    ):
+        """
+        leverage: int; target initial leverage: int from 1 to 125
+        """
         try:
             response = self.um_futures_client.change_leverage(
                 symbol=symbol,
                 leverage=leverage,
+                recvWindow=recvWindow,
             )
             return response
         except ClientError as error:
@@ -335,11 +550,22 @@ class UMFuturesClient(object):
                 )
             )
 
-    def changeMarginType(self, symbol: str, marginType: str):
+    def changeMarginType(
+            self,
+            symbol: str,
+            marginType: str,
+            leverage: str,
+            recvWindow: Optional[int],
+    ):
+        """
+        leverage: string; ISOLATED, CROSSED
+        """
         try:
             response = self.um_futures_client.change_margin_type(
                 symbol=symbol,
                 marginType=marginType,
+                leverage=leverage,
+                recvWindow=recvWindow,
             )
             return response
         except ClientError as error:
@@ -354,12 +580,20 @@ class UMFuturesClient(object):
             symbol: str,
             amount: float,
             type: int,
+            positionSide: Optional[str],
+            recvWindow: Optional[int],
     ):
+        """
+        type: int; 1: Add position margin, 2: Reduce position margin
+        positionSide: optional string; default BOTH for One-way Mode, LONG or SHORT for Hedge Mode. It must be sent with Hedge Mode.
+        """
         try:
             response = self.um_futures_client.modify_isolated_position_margin(
                 symbol=symbol,
                 amount=amount,
                 type=type,
+                positionSide=positionSide,
+                recvWindow=recvWindow,
             )
             return response
         except ClientError as error:
@@ -369,9 +603,28 @@ class UMFuturesClient(object):
                 )
             )
 
-    def getPositionMarginHistory(self, symbol: str):
+    def getPositionMarginHistory(
+            self,
+            symbol: str,
+            type: Optional[int],
+            startTime: Optional[str],
+            endTime: Optional[str],
+            recvWindow: Optional[int],
+            limit: Optional[int] = 500,
+    ):
+        """
+        type: optional int; 1: Add position margin, 2: Reduce position margin.
+        limit: optional int; default 500
+        """
         try:
-            response = self.um_futures_client.get_position_margin_history(symbol=symbol)
+            response = self.um_futures_client.get_position_margin_history(
+                symbol=symbol,
+                type=type,
+                startTime=startTime,
+                endTime=endTime,
+                limit=limit,
+                recvWindow=recvWindow,
+            )
             return response
         except ClientError as error:
             logging.error(
@@ -380,9 +633,9 @@ class UMFuturesClient(object):
                 )
             )
 
-    def getPositionRisk(self, symbol: str):
+    def getPositionRisk(self, symbol: str, recvWindow: Optional[int]):
         try:
-            response = self.um_futures_client.get_position_risk(symbol=symbol)
+            response = self.um_futures_client.get_position_risk(symbol=symbol, recvWindow=recvWindow)
             return response
         except ClientError as error:
             logging.error(
@@ -391,9 +644,30 @@ class UMFuturesClient(object):
                 )
             )
 
-    def getIncomeHistory(self):
+    def getIncomeHistory(
+            self,
+            symbol: Optional[str],
+            incomeType: Optional[int],
+            startTime: Optional[str],
+            endTime: Optional[str],
+            recvWindow: Optional[int],
+            limit: Optional[int] = 100,
+    ):
+        """
+        incomeType: optional string; "TRANSFER", "WELCOME_BONUS", "REALIZED_PNL", "FUNDING_FEE", "COMMISSION" and "INSURANCE_CLEAR"
+        startTime: optional string; timestamp in ms to get funding from INCLUSIVE.
+        endTime: optional string; timestamp in ms to get funding from INCLUSIVE.
+        limit: optional int; default 100, max 1000
+        """
         try:
-            response = self.um_futures_client.get_income_history()
+            response = self.um_futures_client.get_income_history(
+                symbol=symbol,
+                incomeType=incomeType,
+                startTime=startTime,
+                endTime=endTime,
+                recvWindow=recvWindow,
+                limit=limit,
+            )
             return response
         except ClientError as error:
             logging.error(
@@ -402,9 +676,16 @@ class UMFuturesClient(object):
                 )
             )
 
-    def leverageBrackets(self):
+    def leverageBrackets(
+            self,
+            symbol: Optional[str],
+            recvWindow: Optional[int],
+    ):
         try:
-            response = self.um_futures_client.leverage_brackets()
+            response = self.um_futures_client.leverage_brackets(
+                symbol=symbol,
+                recvWindow=recvWindow,
+            )
             return response
         except ClientError as error:
             logging.error(
@@ -413,9 +694,19 @@ class UMFuturesClient(object):
                 )
             )
 
-    def adlQuantile(self):
+    def adlQuantile(self, symbol: Optional[str], recvWindow: Optional[int]):
+        """
+        - Values update every 30s.
+        - Values 0, 1, 2, 3, 4 shows the queue position and possibility of ADL from low to high.
+        - For positions of the symbol are in One-way Mode or isolated margined in Hedge Mode, "LONG", "SHORT", and "BOTH"
+         will be returned to show the positions' adl quantiles of different position sides.
+        - If the positions of the symbol are crossed margined in Hedge Mode:
+        - "HEDGE" as a sign will be returned instead of "BOTH";
+        - A same value calculated on unrealized pnls on long and short sides' positions will be shown for "LONG" and "SHORT"
+        when there are positions in both of long and short sides.
+        """
         try:
-            response = self.um_futures_client.adl_quantile()
+            response = self.um_futures_client.adl_quantile(symbol=symbol, recvWindow=recvWindow)
             return response
         except ClientError as error:
             logging.error(
@@ -424,9 +715,30 @@ class UMFuturesClient(object):
                 )
             )
 
-    def forceOrders(self):
+    def forceOrders(
+            self,
+            symbol: Optional[str],
+            autoCloseType: Optional[str],
+            startTime: Optional[str],
+            endTime: Optional[str],
+            recvWindow: Optional[int],
+            limit: Optional[int] = 50,
+    ):
+        """
+        autoCloseType: optional string; "LIQUIDATION" for liquidation orders, "ADL" for ADL orders.
+        limit: optional int; default 50, max 100
+        - If "autoCloseType" is not sent, orders with both of the types will be returned
+        - If "startTime" is not sent, data within 200 days before "endTime" can be queried
+        """
         try:
-            response = self.um_futures_client.force_orders()
+            response = self.um_futures_client.force_orders(
+                symbol=symbol,
+                autoCloseType=autoCloseType,
+                startTime=startTime,
+                endTime=endTime,
+                recvWindow=recvWindow,
+                limit=limit,
+            )
             return response
         except ClientError as error:
             logging.error(
@@ -435,9 +747,9 @@ class UMFuturesClient(object):
                 )
             )
 
-    def apiTradingStatus(self):
+    def apiTradingStatus(self, symbol: Optional[str], recvWindow: Optional[int]):
         try:
-            response = self.um_futures_client.api_trading_status()
+            response = self.um_futures_client.api_trading_status(symbol=symbol, recvWindow=recvWindow)
             return response
         except ClientError as error:
             logging.error(
@@ -446,9 +758,9 @@ class UMFuturesClient(object):
                 )
             )
 
-    def commissionRate(self, symbol: str):
+    def commissionRate(self, symbol: str, recvWindow: Optional[int]):
         try:
-            response = self.um_futures_client.commission_rate(symbol=symbol)
+            response = self.um_futures_client.commission_rate(symbol=symbol, recvWindow=recvWindow)
             return response
         except ClientError as error:
             logging.error(
@@ -461,11 +773,13 @@ class UMFuturesClient(object):
             self,
             startTime: int,
             endTime: int,
+            recvWindow: Optional[int]
     ):
         try:
             response = self.um_futures_client.download_transactions_asyn(
                 startTime=startTime,
                 endTime=endTime,
+                recvWindow=recvWindow,
             )
             return response
         except ClientError as error:
@@ -475,10 +789,11 @@ class UMFuturesClient(object):
                 )
             )
 
-    def aysncDownloadInfo(self, downloadId: str):
+    def aysncDownloadInfo(self, downloadId: str, recvWindow: Optional[int]):
         try:
             response = self.um_futures_client.aysnc_download_info(
                 downloadId=downloadId,
+                recvWindow=recvWindow,
             )
             return response
         except ClientError as error:
@@ -491,6 +806,6 @@ class UMFuturesClient(object):
 
 if __name__ == "__main__":
     umf = UMFuturesClient()
-    t = umf.makeOrder(symbol="BTCUSDT", orderType='MARKET', side="BUY", quantity=0.01)
+    t = umf.makeOrder(symbol="BTCUSDT", type='MARKET', side="BUY", quantity=0.01)
     output = umf.getAccountTrades()
     print(output)
