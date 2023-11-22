@@ -7,7 +7,7 @@ FLAGS = -Wall -Werror -Wextra
 all: build
 
 build:
-	g++ -Wall -Werror -Wextra main.cpp Exchange/HTTPRequest.cpp Exchange/ByBitAdapter.cpp -lcurl -ljsoncpp
+	g++ -Wall -Werror -Wextra main.cpp Exchange/HTTPRequest.cpp Exchange/ByBitAdapter.cpp Util/TimeConverter.cpp -lcurl -ljsoncpp
 
 clang:
 	clang-format -i *.cpp
