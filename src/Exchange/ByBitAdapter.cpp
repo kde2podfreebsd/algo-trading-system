@@ -5,28 +5,50 @@
 const std::string ByBitAdapter::API_URL = "https://api-testnet.bybit.com/v5/market/kline?category=linear";
 
 std::vector<std::vector<std::string>> ByBitAdapter::getKlines(const std::string& symbol, const std::string& interval, long long start, long long end, int limit) {
-    std::string url = API_URL + "&symbol=" + symbol + "&interval=" + interval;
+    std::vector<std::vector<std::string>> allQuotes;
 
-    if (start != 0) {
-        url += "&start=" + std::to_string(start);
-    }
+    // Need fix limit & nextEnd calculation
+    int maxLimit = 1000;
 
-    if (end != 0) {
-        url += "&end=" + std::to_string(end);
-    }
+    while (start < end) {
+        long long nextEnd = start + (maxLimit * std::stoll(interval) * 60000);
 
-    if (limit != 0) {
-        url += "&limit=" + std::to_string(limit);
-    }
-
-    std::string response;
-    std::vector<std::vector<std::string>> quotes;
-    if (sendGETRequest(url, response)) {
-        if (parseJSONResponse(response, quotes)) {
-            return quotes;
+        if (nextEnd > end) {
+            nextEnd = end;
         }
+
+        std::string url = API_URL + "&symbol=" + symbol + "&interval=" + interval;
+
+        if (start != 0) {
+            url += "&start=" + std::to_string(start);
+        }
+
+        if (nextEnd != 0) {
+            url += "&end=" + std::to_string(nextEnd);
+        }
+
+        if (limit != 0) {
+            url += "&limit=" + std::to_string(maxLimit);
+        }
+
+        std::string response;
+        std::vector<std::vector<std::string>> quotes;
+
+        try {
+            if (sendGETRequest(url, response)) {
+                if (parseJSONResponse(response, quotes)) {
+                    allQuotes.insert(allQuotes.end(), quotes.begin(), quotes.end());
+                }
+            }
+        } catch (const std::exception& e) {
+            std::cerr << "Error occurred: " << e.what() << std::endl;
+            return {};
+        }
+
+        start = nextEnd;
     }
-    return {};
+
+    return allQuotes;
 }
 
 void ByBitAdapter::printQuotes(const std::vector<std::vector<std::string>>& quotes) {
@@ -46,14 +68,3 @@ void ByBitAdapter::printQuotes(const std::vector<std::vector<std::string>>& quot
         }
     }
 }
-
-
-
-// void ByBitAdapter::printQuotes(const std::vector<std::vector<std::string>>& quotes) {
-//     for (const auto& quote : quotes) {
-//         for (const auto& data : quote) {
-//             std::cout << data << " ";
-//         }
-//         std::cout << std::endl;
-//     }
-// }
