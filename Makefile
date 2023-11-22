@@ -1,31 +1,14 @@
-up:
-	docker compose -f docker-compose-local.yaml up -d
+# g++ test.cpp -lcurl -ljsoncpp
+# g++ talib.cpp -lta_lib
 
-down:
-	docker compose -f docker-compose-local.yaml down && docker network prune --force
+CC = g++
+FLAGS = -Wall -Werror -Wextra
 
-# Clean cache
-clean:
-	find . -name __pycache__ -type d -print0|xargs -0 rm -r --
-	rm -rf .idea/
+all: build
 
-test:
-	pytest app/TaLib/Test/MomentumIndicatorsTest.py
+build:
+	g++ -Wall -Werror -Wextra main.cpp Exchange/HTTPRequest.cpp Exchange/ByBitAdapter.cpp -lcurl -ljsoncpp
 
-alembic_init:
-	alembic init migrations
-
-alembic_rev:
-	alembic revision --autogenerate -m 'init'
-
-alembic_upgrade:
-	alembic upgrade heads
-
-server_up:
-	uvicorn app.main:app
-
-pre_commit:
-	pre-commit run flake8 --all-files
-
-pylint:
-	pylint $(git ls-files '*.py')
+clang:
+	clang-format -i *.cpp
+	clang-format -i *.hpp
