@@ -1,10 +1,12 @@
-#include "TAlib.hpp"
+#include "MomentumIndicators.hpp"
 
 
-std::vector<double> TAlibCalculator::calculateRSI(const std::vector<std::vector<std::string>>& stringCandles, int period) {
-    std::vector<std::vector<double>> candles = convertStringCandlesToDouble(stringCandles);
+std::vector<double> MomentumIndicators::calculateRSI(const std::vector<std::vector<std::string>>& stringCandles, int period) {
+    TAlibHelper helper;
 
-    std::vector<double> closePrices = extractClosePrices(candles);
+    std::vector<std::vector<double>> candles = helper.convertStringCandlesToDouble(stringCandles);
+
+    std::vector<double> closePrices = helper.extractClosePrices(candles);
 
     int startIdx = 0;
     int endIdx = closePrices.size() - 1;
@@ -19,8 +21,10 @@ std::vector<double> TAlibCalculator::calculateRSI(const std::vector<std::vector<
     return outRSI;
 }
 
-std::vector<double> TAlibCalculator::calculateADX(const std::vector<std::vector<std::string>>& stringCandles, int period) {
-    std::vector<std::vector<double>> candles = convertStringCandlesToDouble(stringCandles);
+std::vector<double> MomentumIndicators::calculateADX(const std::vector<std::vector<std::string>>& stringCandles, int period) {
+    TAlibHelper helper;
+
+    std::vector<std::vector<double>> candles = helper.convertStringCandlesToDouble(stringCandles);
 
     int startIdx = 0;
     int endIdx = candles[0].size() - 1;

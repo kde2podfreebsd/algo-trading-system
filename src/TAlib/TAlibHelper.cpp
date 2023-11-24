@@ -1,6 +1,6 @@
-#include "TAlib.hpp"
+#include "TAlibHelper.hpp"
 
-std::vector<double> TAlibCalculator::extractClosePrices(const std::vector<std::vector<double>>& candles) {
+std::vector<double> TAlibHelper::extractClosePrices(const std::vector<std::vector<double>>& candles) {
     std::vector<double> closePrices;
     for (const auto& candle : candles) {
         if (candle.size() >= 5) {
@@ -10,11 +10,11 @@ std::vector<double> TAlibCalculator::extractClosePrices(const std::vector<std::v
     return closePrices;
 }
 
-bool TAlibCalculator::checkValidData(const std::vector<double>& data) {
+bool TAlibHelper::checkValidData(const std::vector<double>& data) {
     return !data.empty();
 }
 
-std::vector<std::vector<double>> TAlibCalculator::convertStringCandlesToDouble(const std::vector<std::vector<std::string>>& stringCandles) {
+std::vector<std::vector<double>> TAlibHelper::convertStringCandlesToDouble(const std::vector<std::vector<std::string>>& stringCandles) {
     std::vector<std::vector<double>> doubleCandles;
     for (const auto& candle : stringCandles) {
         std::vector<double> doubleCandle;
@@ -25,4 +25,3 @@ std::vector<std::vector<double>> TAlibCalculator::convertStringCandlesToDouble(c
     }
     return doubleCandles;
 }
-

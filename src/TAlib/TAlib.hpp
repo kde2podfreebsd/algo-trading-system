@@ -4,16 +4,23 @@
 #include <vector>
 #include <ta-lib/ta_libc.h>
 #include <iostream>
+#include <string>
+#include "MomentumIndicators.hpp"
 
-class TAlibCalculator {
+class TAlib {
 public:
-    std::vector<double> calculateRSI(const std::vector<std::vector<std::string>>& stringCandles, int period);
-    std::vector<double> calculateADX(const std::vector<std::vector<std::string>>& stringCandles, int period);
+    TAlib() {}
+    ~TAlib() {}
 
-private:
-    std::vector<double> extractClosePrices(const std::vector<std::vector<double>>& candles);
-    std::vector<std::vector<double>> convertStringCandlesToDouble(const std::vector<std::vector<std::string>>& stringCandles);
-    bool checkValidData(const std::vector<double>& data);
+    std::vector<double> calculateRSI(const std::vector<std::vector<std::string>>& stringCandles, int period) {
+        MomentumIndicators momentum;
+        return momentum.calculateRSI(stringCandles, period);
+    }
+
+    std::vector<double> calculateADX(const std::vector<std::vector<std::string>>& stringCandles, int period) {
+        MomentumIndicators momentum;
+        return momentum.calculateADX(stringCandles, period);
+    }
 };
 
 #endif

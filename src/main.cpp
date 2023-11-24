@@ -23,15 +23,31 @@ void test_talib() {
 
     std::vector<std::vector<std::string>> candles = adapter.getKlines(symbol, interval, startTimestamp, endTimestamp);
 
-    TAlibCalculator calculator;
+    TAlib talib;
+
+
+    // RSi
     int rsiperiod = 14;
 
-    std::vector<double> rsiValues = calculator.calculateRSI(candles, rsiperiod);
+    std::vector<double> rsiValues = talib.calculateRSI(candles, rsiperiod);
 
     std::cout << "RSI values for each candlestick: " << std::endl;
     for (size_t i = 0; i < rsiValues.size(); ++i) {
         std::cout << "Candle " << i + 1 << ": RSI = " << rsiValues[i] << std::endl;
     }
+
+    // ADX
+
+    int adxPeriod = 14;
+
+    std::vector<double> adxValues = talib.calculateADX(candles, adxPeriod);
+
+    std::cout << "ADX values for each candlestick: " << std::endl;
+    for (size_t i = 0; i < adxValues.size(); ++i) {
+        std::cout << "Candle " << i + 1 << ": ADX = " << adxValues[i] << std::endl;
+    }
+
+
 }
 
 int database_test(){
