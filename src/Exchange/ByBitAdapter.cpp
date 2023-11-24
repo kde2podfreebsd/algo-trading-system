@@ -4,32 +4,23 @@
 
 const std::string ByBitAdapter::API_URL = "https://api-testnet.bybit.com/v5/market/kline?category=linear";
 
-std::vector<std::vector<std::string>> ByBitAdapter::getKlines(const std::string& symbol, const std::string& interval, long long start, long long end, int limit) {
-    std::vector<std::vector<std::string>> allQuotes;
+std::vector<std::vector<std::string>> ByBitAdapter::getKlines(const std::string& symbol, const std::string& interval, long long start, long long end) {
 
-    // Need fix limit & nextEnd calculation
+    std::vector<std::vector<std::string>> allQuotes;
     int maxLimit = 1000;
 
-    while (start < end) {
-        long long nextEnd = start + (maxLimit * std::stoll(interval) * 60000);
+    while (end > start) {
+        long long prevStart = end - (maxLimit * std::stoll(interval) * 60000);
 
-        if (nextEnd > end) {
-            nextEnd = end;
-        }
+        if (prevStart < start) prevStart = start;
 
         std::string url = API_URL + "&symbol=" + symbol + "&interval=" + interval;
 
-        if (start != 0) {
-            url += "&start=" + std::to_string(start);
-        }
+        if (prevStart != 0) url += "&start=" + std::to_string(prevStart);
+        
+        if (end != 0) url += "&end=" + std::to_string(end);
 
-        if (nextEnd != 0) {
-            url += "&end=" + std::to_string(nextEnd);
-        }
-
-        if (limit != 0) {
-            url += "&limit=" + std::to_string(maxLimit);
-        }
+        url += "&limit=" + std::to_string(maxLimit);
 
         std::string response;
         std::vector<std::vector<std::string>> quotes;
@@ -45,7 +36,7 @@ std::vector<std::vector<std::string>> ByBitAdapter::getKlines(const std::string&
             return {};
         }
 
-        start = nextEnd;
+        end = prevStart;
     }
 
     return allQuotes;

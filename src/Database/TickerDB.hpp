@@ -17,7 +17,6 @@ public:
     void insertTicker(const std::string& ticker, const std::string& interval);
     void insertBar(int tickerId, const std::string& startTime, float openPrice, float highPrice, float lowPrice, float closePrice, int volume, float turnover);
 
-
 private:
     PGconn *conn;
     const char* connectionInfo;

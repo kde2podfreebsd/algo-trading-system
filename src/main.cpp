@@ -6,11 +6,12 @@ int bybit_tickers();
 int database_test();
 
 int main() {
-    database_test();
+    // database_test();
+    bybit_tickers();
 }
 
 int database_test(){
-    const char* connectionInfo = "host=172.21.0.3 dbname=tickerdb user=root password=root";
+    const char* connectionInfo = "host=172.21.0.2 dbname=tickerdb user=root password=root";
 
     TickerDB tickerDB(connectionInfo);
 
@@ -34,10 +35,9 @@ int bybit_tickers(){
     ByBitAdapter adapter;
 
     std::string symbol = "ETHUSD";
-    std::string interval = "720";
+    std::string interval = "60";
     long long startTimestamp = 1660601600000LL; 
     long long endTimestamp = 1680608800000LL;   
-    int limit = 1000;
 
     std::tm dateTime = TimeConverter::timestampToDateTime(startTimestamp);
     std::cout << "Start date and time: " << std::put_time(&dateTime, "%c") << std::endl;
@@ -45,7 +45,7 @@ int bybit_tickers(){
     std::tm dateTime2 = TimeConverter::timestampToDateTime(endTimestamp);
     std::cout << "End date and time: " << std::put_time(&dateTime2, "%c") << std::endl;
 
-    std::vector<std::vector<std::string>> quotes = adapter.getKlines(symbol, interval, startTimestamp, endTimestamp, limit);
+    std::vector<std::vector<std::string>> quotes = adapter.getKlines(symbol, interval, startTimestamp, endTimestamp);
 
     if (!quotes.empty()) {
         adapter.printQuotes(quotes);
