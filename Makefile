@@ -1,14 +1,31 @@
-# g++ test.cpp -lcurl -ljsoncpp
-# g++ talib.cpp -lta_lib
-
 CC = g++
 FLAGS = -Wall -Werror -Wextra
+LIBS = -lcurl -ljsoncpp -lpq -lta_lib
+SRCDIR = src
+BUILDDIR = build
+TARGET = $(BUILDDIR)/a.out
+
+SRCEXT = cpp
+SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
+OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
+CFLAGS = -c
 
 all: build
 
-build: 
-	g++ -Wall -Werror -Wextra main.cpp Exchange/HTTPRequest.cpp Exchange/ByBitAdapter.cpp Util/TimeConverter.cpp Database/TickerDB.cpp -lcurl -ljsoncpp -lpq -o ../build/a.out
+build: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	@mkdir -p $(BUILDDIR)
+	$(CC) $^ $(LIBS) -o $(TARGET)
+
+$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
+	@mkdir -p $(dir $@)
+	$(CC) $(FLAGS) $(CFLAGS) -o $@ $<
+
+.PHONY: clean
+
+clean:
+	@rm -rf $(BUILDDIR)
 
 clang:
-	clang-format -i *.cpp
-	clang-format -i *.hpp
+	clang-format -i $(shell find $(SRCDIR) -name "*.$(SRCEXT)") $(shell find $(SRCDIR) -name "*.hpp")

@@ -1,13 +1,37 @@
 #include "Exchange/ByBitAdapter.hpp"
 #include "Util/TimeConverter.hpp"
 #include "Database/TickerDB.hpp"
+#include "TAlib/TAlib.hpp"
 
 int bybit_tickers();
 int database_test();
+void test_talib();
 
 int main() {
     // database_test();
-    bybit_tickers();
+    test_talib();
+    // bybit_tickers();
+}
+
+void test_talib() {
+    ByBitAdapter adapter;
+
+    std::string symbol = "ETHUSD";
+    std::string interval = "60";
+    long long startTimestamp = 1660601600000LL;
+    long long endTimestamp = 1680608800000LL;
+
+    std::vector<std::vector<std::string>> candles = adapter.getKlines(symbol, interval, startTimestamp, endTimestamp);
+
+    TAlibCalculator calculator;
+    int rsiperiod = 14;
+
+    std::vector<double> rsiValues = calculator.calculateRSI(candles, rsiperiod);
+
+    std::cout << "RSI values for each candlestick: " << std::endl;
+    for (size_t i = 0; i < rsiValues.size(); ++i) {
+        std::cout << "Candle " << i + 1 << ": RSI = " << rsiValues[i] << std::endl;
+    }
 }
 
 int database_test(){
