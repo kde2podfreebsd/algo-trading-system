@@ -51,7 +51,7 @@ void test_talib() {
 }
 
 int database_test(){
-    const char* connectionInfo = "host=172.21.0.2 dbname=tickerdb user=root password=root";
+    const char* connectionInfo = "host=172.22.0.3 dbname=tickerdb user=root password=root";
 
     TickerDB tickerDB(connectionInfo);
 
