@@ -5,7 +5,7 @@
 #include <ta-lib/ta_libc.h>
 #include <iostream>
 #include <string>
-#include "MomentumIndicators.hpp"
+#include "TechIndicators/MomentumIndicators.hpp"
 
 class TAlib {
 public:
