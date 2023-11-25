@@ -17,7 +17,7 @@ int main() {
 }
 
 void API_test(){
-    Server server(L"http://localhost:8080/api");
+    Server server(U("http://localhost:8082/api"));
 
     server.start();
 
@@ -25,8 +25,6 @@ void API_test(){
     std::string line;
     std::getline(std::cin, line);
     server.stop();
-
-    return 0;
 }
 
 void test_talib() {
