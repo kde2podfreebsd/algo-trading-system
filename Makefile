@@ -1,6 +1,6 @@
 CC = g++
 FLAGS = -Wall -Werror -Wextra
-LIBS = -lcurl -ljsoncpp -lpq -lta_lib
+LIBS = -lcurl -ljsoncpp -lpq -lta_lib -lcpprest -lboost_system -lboost_thread -lboost_chrono -lboost_random
 SRCDIR = src
 BUILDDIR = build
 TARGET = $(BUILDDIR)/a.out

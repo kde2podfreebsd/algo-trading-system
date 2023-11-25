@@ -2,15 +2,31 @@
 #include "Util/TimeConverter.hpp"
 #include "Database/TickerDB.hpp"
 #include "TAlib/TAlib.hpp"
+#include "API/Server.h"
 
 int bybit_tickers();
 int database_test();
 void test_talib();
+void API_test();
 
 int main() {
+    API_test();
     // database_test();
-    test_talib();
+    // test_talib();
     // bybit_tickers();
+}
+
+void API_test(){
+    Server server(L"http://localhost:8080/api");
+
+    server.start();
+
+    std::cout << "Сервер запущен. Нажмите Enter для завершения работы." << std::endl;
+    std::string line;
+    std::getline(std::cin, line);
+    server.stop();
+
+    return 0;
 }
 
 void test_talib() {
