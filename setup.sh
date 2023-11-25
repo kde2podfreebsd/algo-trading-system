@@ -1,12 +1,13 @@
+#!/bin/bash
+
 DISTRO=""
 
 if [ -f "/etc/os-release" ]; then
     DISTRO=$(grep -oP '(?<=^ID=).+' /etc/os-release | tr -d '"')
 fi
 
-case "$DISTRO" in
+case "$DISTRO" in arch|manjaro|debian|ubuntu)
 
-    arch|manjaro|debian|ubuntu)
         echo "Arch Linux | vcpkg"
         INCLUDE_DIR="include"
         VCPKG_DIR="$INCLUDE_DIR/vcpkg"
@@ -40,7 +41,7 @@ case "$DISTRO" in
         ;;
 
     *)
-        echo "Дистрибутив не поддерживается данным install.sh. Доступные дистрибутивы: Arch | Manjaro | Debian | Ubuntu "
+        echo "Дистрибутив не поддерживается данным setup.sh. Доступные дистрибутивы: Arch | Manjaro | Debian | Ubuntu "
         exit 1
         ;;
 esac

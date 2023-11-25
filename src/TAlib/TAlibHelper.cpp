@@ -10,11 +10,10 @@ std::vector<double> TAlibHelper::extractClosePrices(const std::vector<std::vecto
     return closePrices;
 }
 
-bool TAlibHelper::checkValidData(const std::vector<double>& data) {
-    return !data.empty();
-}
+bool TAlibHelper::checkValidData(const std::vector<double>& data) { return !data.empty(); }
 
-std::vector<std::vector<double>> TAlibHelper::convertStringCandlesToDouble(const std::vector<std::vector<std::string>>& stringCandles) {
+std::vector<std::vector<double>> TAlibHelper::convertStringCandlesToDouble(
+    const std::vector<std::vector<std::string>>& stringCandles) {
     std::vector<std::vector<double>> doubleCandles;
     for (const auto& candle : stringCandles) {
         std::vector<double> doubleCandle;

@@ -1,14 +1,15 @@
 #ifndef TALIBHELPER_HPP
 #define TALIBHELPER_HPP
 
-#include <vector>
 #include <iostream>
+#include <vector>
 
 class TAlibHelper {
-public:
+   public:
     std::vector<double> extractClosePrices(const std::vector<std::vector<double>>& candles);
     bool checkValidData(const std::vector<double>& data);
-    std::vector<std::vector<double>> convertStringCandlesToDouble(const std::vector<std::vector<std::string>>& stringCandles);
+    std::vector<std::vector<double>> convertStringCandlesToDouble(
+        const std::vector<std::vector<std::string>>& stringCandles);
 };
 
 #endif

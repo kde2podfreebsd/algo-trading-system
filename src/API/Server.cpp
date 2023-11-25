@@ -1,4 +1,4 @@
-#include "Server.h"
+#include "Server.hpp"
 
 Server::Server(utility::string_t url) : listener(url), router() {
     listener.support(methods::GET, std::bind(&Router::handle_get, &router, std::placeholders::_1));
@@ -8,11 +8,7 @@ Server::Server(utility::string_t url) : listener(url), router() {
 }
 
 void Server::start() {
-    listener.open().then([this]() {
-        std::wcout << L"Сервер запущен\n";
-    }).wait();
+    listener.open().then([this]() { std::wcout << L"Сервер запущен\n"; }).wait();
 }
 
-void Server::stop() {
-    listener.close().wait();
-}
+void Server::stop() { listener.close().wait(); }

@@ -1,14 +1,16 @@
 #ifndef TALIB_HPP
 #define TALIB_HPP
 
-#include <vector>
 #include <ta-lib/ta_libc.h>
+
 #include <iostream>
 #include <string>
+#include <vector>
+
 #include "TechIndicators/MomentumIndicators.hpp"
 
 class TAlib {
-public:
+   public:
     TAlib() {}
     ~TAlib() {}
 

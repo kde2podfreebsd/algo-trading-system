@@ -1,6 +1,8 @@
 #include "HTTPRequest.hpp"
-#include <iostream>
+
 #include <curl/curl.h>
+
+#include <iostream>
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
@@ -37,7 +39,8 @@ bool HTTPRequest::sendGETRequest(const std::string& url, std::string& response) 
     return true;
 }
 
-bool HTTPRequest::parseJSONResponse(const std::string& jsonString, std::vector<std::vector<std::string>>& quotes) {
+bool HTTPRequest::parseJSONResponse(const std::string& jsonString,
+                                    std::vector<std::vector<std::string>>& quotes) {
     json jsonResponse;
     try {
         jsonResponse = json::parse(jsonString);

@@ -1,8 +1,9 @@
-#include "Exchange/ByBitAdapter.hpp"
-#include "Util/TimeConverter.hpp"
+#include "API/Server.hpp"
 #include "Database/TickerDB.hpp"
+#include "Exchange/ByBit/ByBitAdapter.hpp"
 #include "TAlib/TAlib.hpp"
-#include "API/Server.h"
+#include "Util/CfgReader.hpp"
+#include "Util/TimeConverter.hpp"
 
 int bybit_tickers();
 int database_test();
@@ -16,8 +17,21 @@ int main() {
     // bybit_tickers();
 }
 
-void API_test(){
-    Server server(U("http://localhost:8082/api"));
+void API_test() {
+    CfgReader reader;
+    reader.readConfigFile("config.cfg");
+
+    std::string key = "SERVER_URI";
+    std::string value = reader.getValue(key);
+
+    if (!value.empty()) {
+        std::cout << "Значение для ключа '" << key << "': " << value << std::endl;
+    } else {
+        std::cout << "Ключ '" << key << "' не найден" << std::endl;
+        return;
+    }
+
+    Server server(U(value));
 
     server.start();
 
@@ -35,10 +49,10 @@ void test_talib() {
     long long startTimestamp = 1660601600000LL;
     long long endTimestamp = 1680608800000LL;
 
-    std::vector<std::vector<std::string>> candles = adapter.getKlines(symbol, interval, startTimestamp, endTimestamp);
+    std::vector<std::vector<std::string>> candles =
+        adapter.getKlines(symbol, interval, startTimestamp, endTimestamp);
 
     TAlib talib;
-
 
     // RSi
     int rsiperiod = 14;
@@ -60,11 +74,9 @@ void test_talib() {
     for (size_t i = 0; i < adxValues.size(); ++i) {
         std::cout << "Candle " << i + 1 << ": ADX = " << adxValues[i] << std::endl;
     }
-
-
 }
 
-int database_test(){
+int database_test() {
     const char* connectionInfo = "host=172.22.0.3 dbname=tickerdb user=root password=root";
 
     TickerDB tickerDB(connectionInfo);
@@ -85,13 +97,13 @@ int database_test(){
     return 0;
 }
 
-int bybit_tickers(){
+int bybit_tickers() {
     ByBitAdapter adapter;
 
     std::string symbol = "ETHUSD";
     std::string interval = "60";
-    long long startTimestamp = 1660601600000LL; 
-    long long endTimestamp = 1680608800000LL;   
+    long long startTimestamp = 1660601600000LL;
+    long long endTimestamp = 1680608800000LL;
 
     std::tm dateTime = TimeConverter::timestampToDateTime(startTimestamp);
     std::cout << "Start date and time: " << std::put_time(&dateTime, "%c") << std::endl;
@@ -99,7 +111,8 @@ int bybit_tickers(){
     std::tm dateTime2 = TimeConverter::timestampToDateTime(endTimestamp);
     std::cout << "End date and time: " << std::put_time(&dateTime2, "%c") << std::endl;
 
-    std::vector<std::vector<std::string>> quotes = adapter.getKlines(symbol, interval, startTimestamp, endTimestamp);
+    std::vector<std::vector<std::string>> quotes =
+        adapter.getKlines(symbol, interval, startTimestamp, endTimestamp);
 
     if (!quotes.empty()) {
         adapter.printQuotes(quotes);

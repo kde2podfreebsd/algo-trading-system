@@ -1,18 +1,19 @@
 #pragma once
 #include <cpprest/http_listener.h>
-#include "Router.h"
+
+#include "Router.hpp"
 
 using namespace web;
 using namespace web::http;
 using namespace web::http::experimental::listener;
 
 class Server {
-public:
+   public:
     Server(utility::string_t url);
     void start();
     void stop();
 
-private:
+   private:
     http_listener listener;
     Router router;
 };

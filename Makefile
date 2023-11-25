@@ -10,7 +10,6 @@ SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 CFLAGS = -c
 
-
 VCPKG_DIR = $(INCLUDE_DIR)/vcpkg/installed/x64-linux
 
 BUILD_FLAGS = -L$(VCPKG_DIR)/lib -lcpprest -lboost_system -lboost_thread -lboost_chrono -lboost_random -lcurl -ljsoncpp -lpq -lta_lib -lssl -lcrypto
