@@ -19,7 +19,7 @@ case "$DISTRO" in arch|manjaro|debian|ubuntu)
             pip3 install pre-commit
         fi
 
-        pre-commit install
+        # pre-commit install
 
 
         echo "Arch Linux | vcpkg"

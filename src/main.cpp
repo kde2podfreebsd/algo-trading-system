@@ -19,19 +19,18 @@ int main() {
 
 void API_test() {
     CfgReader reader;
-    reader.readConfigFile("config.cfg");
+    reader.readEnvFile(".env");
 
-    std::string key = "SERVER_URI";
-    std::string value = reader.getValue(key);
+    std::string uri = reader.getServerURI();
 
-    if (!value.empty()) {
-        std::cout << "Значение для ключа '" << key << "': " << value << std::endl;
+    if (!uri.empty()) {
+        std::cout << "URI сервера: " << uri << std::endl;
     } else {
-        std::cout << "Ключ '" << key << "' не найден" << std::endl;
+        std::cout << "Ошибка получения URI сервера" << std::endl;
         return;
     }
 
-    Server server(U(value));
+    Server server(uri);
 
     server.start();
 

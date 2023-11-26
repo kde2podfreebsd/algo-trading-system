@@ -1,37 +1,67 @@
 #include "CfgReader.hpp"
 
-void CfgReader::readConfigFile(const std::string& filename) {
-    std::ifstream configFile(filename);
+#include <algorithm>
+#include <iterator>
+#include <sstream>
 
-    if (!configFile.is_open()) {
+void CfgReader::readEnvFile(const std::string& filename) {
+    std::ifstream envFile(filename);
+
+    if (!envFile.is_open()) {
         std::cerr << "Ошибка открытия файла " << filename << std::endl;
         return;
     }
 
     std::string line;
-    while (std::getline(configFile, line)) {
+    while (std::getline(envFile, line)) {
         if (line.empty() || line[0] == '#') {
             continue;
         }
 
-        size_t delimiterPos = line.find('=');
-        if (delimiterPos != std::string::npos) {
-            std::string key = line.substr(0, delimiterPos);
-            std::string value = line.substr(delimiterPos + 1);
-            value.erase(0, value.find_first_not_of(" \t\r\n"));
-            value.erase(value.find_last_not_of(" \t\r\n") + 1);
-            configValues[key] = value;
+        std::istringstream iss(line);
+        std::vector<std::string> tokens;
+        std::copy(std::istream_iterator<std::string>(iss), std::istream_iterator<std::string>(),
+                  std::back_inserter(tokens));
+
+        if (tokens.size() >= 2) {
+            std::string key = tokens[0];
+            std::string value = tokens[1];
+
+            if (value.size() >= 2 && value.front() == '"' && value.back() == '"') {
+                value.erase(value.begin());  // remove leading "
+                value.pop_back();            // remove trailing "
+            }
+
+            values[key] = value;
+
+            std::cout << "Прочитано из .env: " << key << " = " << value << std::endl;
         }
     }
 
-    configFile.close();
+    envFile.close();
 }
 
 std::string CfgReader::getValue(const std::string& key) {
-    auto it = configValues.find(key);
-    if (it != configValues.end()) {
+    auto it = values.find(key);
+    if (it != values.end()) {
         return it->second;
-    } else {
-        return "";
     }
+    return "";
+}
+
+std::string CfgReader::getServerURI() {
+    std::string value = getValue("SERVER_URI");
+
+    std::cout << "Значение SERVER_URI из .env: " << value << std::endl;
+
+    if (!value.empty()) {
+        try {
+            web::uri uri(U(value));
+            return uri.to_string();
+        } catch (const web::uri_exception& e) {
+            std::cerr << "Ошибка при разборе URI: " << e.what() << std::endl;
+        }
+    }
+
+    return "";
 }

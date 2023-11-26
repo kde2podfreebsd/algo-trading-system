@@ -7,8 +7,8 @@ services:
     restart: always
     environment:
       POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: tickerdb
+      POSTGRES_PASSWORD: $PASSWORD
+      POSTGRES_DB: dev
     ports:
       - '5432:5432'
 
