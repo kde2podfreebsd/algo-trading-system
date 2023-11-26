@@ -30,6 +30,7 @@ clean:
 	@rm -rf $(BUILDDIR)
 
 clang:
+	clang-format -n $(shell find $(SRCDIR) -name "*.$(SRCEXT)") $(shell find $(SRCDIR) -name "*.hpp")
 	clang-format -i $(shell find $(SRCDIR) -name "*.$(SRCEXT)") $(shell find $(SRCDIR) -name "*.hpp")
 
 cppcheck:

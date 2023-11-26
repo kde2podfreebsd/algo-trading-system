@@ -2,7 +2,7 @@
 #include "Database/TickerDB.hpp"
 #include "Exchange/ByBit/ByBitAdapter.hpp"
 #include "TAlib/TAlib.hpp"
-#include "Util/CfgReader.hpp"
+#include "Util/EnvReader.hpp"
 #include "Util/TimeConverter.hpp"
 
 int bybit_tickers();
@@ -18,10 +18,9 @@ int main() {
 }
 
 void API_test() {
-    CfgReader reader;
-    reader.readEnvFile(".env");
+    EnvReader reader(".env");
 
-    std::string uri = reader.getServerURI();
+    std::string uri = reader.getValue("SERVER_URI");
 
     if (!uri.empty()) {
         std::cout << "URI сервера: " << uri << std::endl;
