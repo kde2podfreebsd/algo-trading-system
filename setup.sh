@@ -8,6 +8,20 @@ fi
 
 case "$DISTRO" in arch|manjaro|debian|ubuntu)
 
+        python3 -m venv venv
+        source venv/bin/activate
+
+        if [ "$DISTRO" = "arch" ] || [ "$DISTRO" = "manjaro" ] || [ "$DISTRO" = "debian" ]; then
+            pip install pre-commit
+        fi
+
+        if [ "$DISTRO" = "ubuntu" ]; then
+            pip3 install pre-commit
+        fi
+
+        pre-commit install
+
+
         echo "Arch Linux | vcpkg"
         INCLUDE_DIR="include"
         VCPKG_DIR="$INCLUDE_DIR/vcpkg"

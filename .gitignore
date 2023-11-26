@@ -32,5 +32,6 @@
 *.app
 
 .env
+venv/
 
 include/vcpkg/*

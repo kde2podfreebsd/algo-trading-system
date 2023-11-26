@@ -36,3 +36,6 @@ clang:
 
 cppcheck:
 	cppcheck --enable=all --suppress=missingIncludeSystem $(SRCDIR)
+
+precommit:
+	pre-commit run --all-files
