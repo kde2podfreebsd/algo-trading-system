@@ -33,3 +33,6 @@ clean:
 
 clang:
 	clang-format -i $(shell find $(SRCDIR) -name "*.$(SRCEXT)") $(shell find $(SRCDIR) -name "*.hpp")
+
+cppcheck:
+	cppcheck --enable=all --suppress=missingIncludeSystem $(SRCDIR)
